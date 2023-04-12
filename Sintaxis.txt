@@ -3,8 +3,8 @@
 <subtitle> Aritmeticos </subtitle>
 
 Incremento: ++
-    Posfijo: ++i
-    Prefijo: i++
+    Posfijo: ++i  regex => /^(\+\+)\s*([A-z]{1})(\w)*$/
+    Prefijo: i++  regex => /^([A-z]{1})(\w)*\s*(\+\+)$/
 
 
 Decremento: --

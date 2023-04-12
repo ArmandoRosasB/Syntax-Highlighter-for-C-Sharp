@@ -1,0 +1,12 @@
+;; Referencia
+;; Pg. 55 http://memoriascimted.com/wp-content/uploads/2021/04/Programación-de-datos-con-Racket.pdf
+
+;; Open-input-file - Abre un archivo para lectura
+;; (open-input-file <ruta> [#:mode {‘binary | ‘text}])
+
+;; Open-output-file - Abre un archivo para escritura
+;; (open-output-file <ruta> [{#:mode {‘binary | ‘text}}]? [{#:exists {‘error|’append|’update|’canupdate|’replace|’truncate|’musttruncate}}]?)
+
+(define out (open-output-file some-file))
+(write "hello world" out)
+(close-output-port out)

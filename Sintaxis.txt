@@ -98,9 +98,9 @@ Comentario multilinea
      28. foreach
 
     <subtitle> Instrucciones jump </subtitle>
-     29. return
-     30. continue
-     31. break
+     29. return  regex => /^\s*return\s*\b/
+     30. continue  regex => /^\s*continue\s*\b/
+     31. break  regex => /^\s*break\s*\b/
      32. goto
 
     <subtitle> Nulo </subtitle>
@@ -141,7 +141,7 @@ Comentario multilinea
      61. interface
 
     <subtitle> Bloques </subtitle>
-     62. try
+     62. try  regex => /^\s*try/
      63. catch
      64. throw
      65. finally
@@ -162,8 +162,8 @@ Comentario multilinea
      74. out
 
     <subtitle> Using y namespace </subtitle>
-     75. using
-     76. namespace	
+     75. using  regex => /^\s*using\s*\b/
+     76. namespace  regex => /\s*namespace\s*\b/
 
 <title> Identificadores válidos </title>
  - Deben comenzar con letra o underscore

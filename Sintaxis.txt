@@ -1,0 +1,61 @@
+<title> Operadores </title>
+
+<subtitle> Aritmeticos </subtitle>
+
+Incremento: ++
+    Posfijo: ++i
+    Prefijo: i++
+
+
+Decremento: --
+    Posfijo: --i
+    Prefijo: i--
+
+Unario Mas: +
+    Ej. +i
+Unario Menos: -
+    Ej. -i
+
+
+Multiplicacion: *
+Division: /
+Modulo: %
+Suma: +
+Resta: -
+
+
+<subtitle> Comparacion </subtitle>
+
+Menor que: <
+Mayor que: >
+Menor o igual que: <=
+Mayor o igual que: >=
+
+<subtitle> Logicos Booleanos </subtitle>
+
+Negacion Logica: !
+    Ej. !a
+
+AND logico: &
+OR exclusivo logico: ^
+OR logico: |
+AND logico condicional: &&
+OR logico condicional: ||
+
+
+<subtitle> Desplazamiento </subtitle>
+Complemento bit a bit: ~
+Desplazamiento a la izquierda: <<
+Desplazamieto a la derecha: >>
+Desplazamiento a la derecha sin signo: >>>
+
+
+<subtitle> Igualdad </subtitle>
+Igualdad: ==
+Desigualdad: !=
+
+
+<title> Comentarios </title>
+
+Comentario unilinea: //
+Comentario multilinea

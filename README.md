@@ -1,5 +1,8 @@
 ﻿# Syntax-Highlighter-for-C-Sharp
- <a href="https://learn.microsoft.com/en-us/dotnet/csharp/" target="_blank" rel="noreferrer"> <img src="https://cdn.cdnlogo.com/logos/c/27/c.svg" alt="C#" width="200" height="200"/> </a>
+ 
+ <p align="center">
+  <img src="https://cdn.cdnlogo.com/logos/c/27/c.svg" alt="C#" width="200" height="200"/>
+</p>
 
 ## Creators
 

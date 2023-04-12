@@ -7,16 +7,28 @@
 ;; Open-output-file - Abre un archivo para escritura
 ;; (open-output-file <ruta> [{#:mode {‘binary | ‘text}}]? [{#:exists {‘error|’append|’update|’canupdate|’replace|’truncate|’musttruncate}}]?)
 
-;;(define out (open-output-file "some-file")
-;;(display "hello world" out)
-;;(close-output-port out)
+#lang racket
 
- (require html-writing)
+;; HTML components
+(define head "<!DOCTYPE html><html lang='en'><head><meta charset='UTF-8'><meta http-equiv='X-UA-Compatible' content='IE=edge'><meta name='viewport' content='width=device-width, initial-scale=1.0'><title>C# code editor</title></head><body style='background:#2C2B34; color:white;'> <p>Test</p>")
+(define style
+      (lambda (elem)
+      (string-append "<p style='color:#5AFF15'>" elem "</p>")))
+(define foot "</body></html>")
 
- (write-html
- '((html (head (title "My Title"))
-         (body (@ (bgcolor "white"))
-               (h1 "My Heading")
-               (p "This is a paragraph.")
-               (p "This is another paragraph."))))
- (current-output-port))
+;; Read C# file
+(with-input-from-file "read.cs"
+      (lambda ()
+      (read-string 1000)))
+
+;; Regex
+
+;; Output file creation
+(with-output-to-file "index.html"
+      (lambda () (printf (string-append head))))
+
+(with-output-to-file "index.html"  #:mode 'binary  #:exists 'append #:permissions #o666 #:replace-permissions? #f
+      (lambda () (printf (string-append (style "System.Console.WriteLine('Hello World');")))))
+
+(with-output-to-file "index.html" #:mode 'binary  #:exists 'append #:permissions #o666 #:replace-permissions? #f
+      (lambda () (printf (string-append foot))))

@@ -3,86 +3,94 @@
 <subtitle> Aritmeticos </subtitle>
 
 Incremento: ++
-    Posfijo: ++i  regex => /^(\+\+)\s*([A-z]{1})(\w)*$/
-    Prefijo: i++  regex => /^([A-z]{1})(\w)*\s*(\+\+)$/
+    Posfijo: ++i    regex => / ^(\+\+)\s*([A-z]{1})(\w)*$ /
+    Prefijo: i++    regex => / ^([A-z]{1})(\w)*\s*(\+\+)$ /
 
 
 Decremento: --
-    Posfijo: --i
-    Prefijo: i--
+    Posfijo: --i    regex => / ^(\-\-)\s*([A-z]{1})(\w)*$ /
+    Prefijo: i--    regex => / ^([A-z]{1})(\w)*\s*(\-\-)$ /
 
-Unario Mas: +
-    Ej. +i
-Unario Menos: -
-    Ej. -i
+Unario Mas: +       regex => / ^(\+)\s*([A-z]{1})(\w)*$ /
+    Ej. +i          
+Unario Menos: -     regex => / ^(\-)\s*([A-z]{1})(\w)*$ /
+    Ej. -i      
 
 
-Multiplicacion: *
-Division: /
-Modulo: %
-Suma: +
-Resta: -
+Multiplicacion: *   regex => / \* /
+Division: /         regex => / \/ /
+Modulo: %           regex => / \% /
+Suma: +             regex => / \+ /
+Resta: -            regex => / \- /
 
 
 <subtitle> Comparacion </subtitle>
 
-Menor que: <
-Mayor que: >
-Menor o igual que: <=
-Mayor o igual que: >=
+Menor que: <                regex => \/ < /            
+Mayor que: >                regex => \/ > /
+Menor o igual que: <=       regex => \/ <= /
+Mayor o igual que: >=       regex => \/ >= /
 
 <subtitle> Logicos Booleanos </subtitle>
 
-Negacion Logica: !
+Negacion Logica: !          regex => / \! /  
     Ej. !a
 
-AND logico: &
-OR exclusivo logico: ^
-OR logico: |
-AND logico condicional: &&
-OR logico condicional: ||
+AND logico: &                   regex => / \& / 
+OR exclusivo logico: ^          regex => / \^ / 
+OR logico: |                    regex => / \| / 
+AND logico condicional: &&      regex => / \(&&) / 
+OR logico condicional: ||       regex => / \(||) / 
 
 
 <subtitle> Desplazamiento </subtitle>
-Complemento bit a bit: ~
-Desplazamiento a la izquierda: <<
-Desplazamieto a la derecha: >>
-Desplazamiento a la derecha sin signo: >>>
+Complemento bit a bit: ~                        regex => / \~ / 
+Desplazamiento a la izquierda: <<               regex => / \(<<) / 
+Desplazamieto a la derecha: >>                  regex => / \(>>) / 
+Desplazamiento a la derecha sin signo: >>>      regex => / \(>>>) / 
 
 
 <subtitle> Igualdad </subtitle>
-Igualdad: ==
-Desigualdad: !=
+Igualdad: ==        regex => / \== / 
+Desigualdad: !=     regex => / \!= / 
 
+<title> Parentesis </title>
+Parentesis: ()      regex => / \( /     regex => / \) /
+Llaves: []          regex => / \[ /     regex => / \] /
+Corchetes {}        regex => / \{ /     regex => / \} /
 
+<title> Comillas </title>
+Simples: ''         regex => /^\'{1}(\w|\W)*\'{1}$/
+Dobles: ""          regex => /^\"{1}(\w|\W)*\"{1}$/
 <title> Comentarios </title>
 
-Comentario unilinea: //
-Comentario multilinea
+Comentario unilinea: //         regex => /^(\/){2}(\w|\W)*$/
+Comentario multilinea: /**/     regex => /^\/\*{1}(\w|\W)*\*\/$/
+
 
 <title> Palabras reservadas </title>
  - C# cuenta con 76 palabras reservadas
 
     <subtitle> Tipos de datos y modificadores </subtitle>
-     1. int
-     2. uint
-     3. long
-     4. ulong
-     5. float
-     6. double
-     7. decimal
-     8. string
-     9. char
-     10. bool
-     11. short
-     12. ushort
-     13. byte
-     14. sbyte
-     15. stackalloc
-     16. fixed
-     17. params
-     18. ref
-     19. internal
+     1. int             regex => /^(\s)*int$/
+     2. uint            regex => /^(\s)*uint$/
+     3. long            regex => /^(\s)*long$/
+     4. ulong           regex => /^(\s)*ulong$/
+     5. float           regex => /^(\s)*float$/
+     6. double          regex => /^(\s)*double$/
+     7. decimal         regex => /^(\s)*decimal$/   
+     8. string          regex => /^(\s)*string$/
+     9. char            regex => /^(\s)*char$/
+     10. bool           regex => /^(\s)*bool$/
+     11. short          regex => /^(\s)*short$/
+     12. ushort         regex => /^(\s)*ushort$/
+     13. byte           regex => /^(\s)*byte$/
+     14. sbyte          regex => /^(\s)*sbyte$/
+     15. stackalloc     regex => /^(\s)*stackalloc$/
+     16. fixed          regex => /^(\s)*fixed$/
+     17. params         regex => /^(\s)*params$/
+     18. ref            regex => /^(\s)*ref$/
+     19. internal       regex => /^(\s)*internal$/
 
     <subtitle> Condicionales </subtitle>
      20. if

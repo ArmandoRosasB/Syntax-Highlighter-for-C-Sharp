@@ -59,3 +59,113 @@ Desigualdad: !=
 
 Comentario unilinea: //
 Comentario multilinea
+
+<title> Palabras reservadas </title>
+ - C# cuenta con 76 palabras reservadas
+
+    <subtitle> Tipos de datos y modificadores </subtitle>
+     1. int
+     2. uint
+     3. long
+     4. ulong
+     5. float
+     6. double
+     7. decimal
+     8. string
+     9. char
+     10. bool
+     11. short
+     12. ushort
+     13. byte
+     14. sbyte
+     15. stackalloc
+     16. fixed
+     17. params
+     18. ref
+     19. internal
+
+    <subtitle> Condicionales </subtitle>
+     20. if
+     21. else
+     22. switch
+     23. case
+     24. default
+
+    <subtitle> Ciclos </subtitle>
+     25. do
+     26. while
+     27. for
+     28. foreach
+
+    <subtitle> Instrucciones jump </subtitle>
+     29. return
+     30. continue
+     31. break
+     32. goto
+
+    <subtitle> Nulo </subtitle>
+     33. null
+
+    <subtitle> Booleanos </subtitle>
+     34. true
+     35. false
+
+    <subtitle> Clases, metodos y mas </subtitle>
+     36. public
+     37. private
+     38. static
+     39. abstract
+     40. virtual
+     41. protected
+     42. class
+     43. this
+     44. event
+     45. base
+     46. explicit
+     47. implicit
+     48. operator
+     49. extern
+     50. object
+     51. override
+     52. readonly
+     53. unsafe
+     54. delegate
+     55. sealed
+     56. void
+
+    <subtitle> Estructuras </subtitle>
+     57. const
+     58. struct
+     59. enum
+     60. new
+     61. interface
+
+    <subtitle> Bloques </subtitle>
+     62. try
+     63. catch
+     64. throw
+     65. finally
+     66. checked
+     67. unchecked
+     68. lock
+
+    <subtitle> Tipo y tamaño </subtitle>
+     69. sizeof
+     70. typeof
+
+    <subtitle> Is as </subtitle>
+     71. is
+     72. as
+
+    <subtitle> Entrada y salida </subtitle>
+     73. in
+     74. out
+
+    <subtitle> Using y namespace </subtitle>
+     75. using
+     76. namespace	
+
+<title> Identificadores válidos </title>
+ - Deben comenzar con letra o underscore
+ - No deben ser iguales a las palabras reservadas
+ - No se aceptan inicios con números o signos

@@ -59,13 +59,14 @@ Parentesis: ()      regex => / \( /     regex => / \) /
 Llaves: []          regex => / \[ /     regex => / \] /
 Corchetes {}        regex => / \{ /     regex => / \} /
 
-<title> Comillas </title>
-Simples: ''         regex => /'([^"]){1}'/
-Dobles: ""          regex => /"([^"])*"/
-<title> Comentarios </title>
+[X]  <title> Comillas </title>
+     Simples: ''         regex => /'([^"]){1}'/
+     Dobles: ""          regex => /"([^"])*"/
 
-Comentario unilinea: //         regex => /^(\/){2}(\w|\W)*$/
-Comentario multilinea: /**/     regex => /^\/\*{1}(\w|\W)*\*\/$/
+[]  <title> Comentarios </title>
+    Comentario unilinea: //         regex => /^(\/){2}(\w|\W)*$/
+                                             /^(\/\/)(\w|\W|\s)*(\<br\>)$/
+    Comentario multilinea: /**/     regex => /^\/\*{1}(\w|\W)*\*\/$/
 
 
 <title> Palabras reservadas </title>
@@ -92,7 +93,7 @@ Comentario multilinea: /**/     regex => /^\/\*{1}(\w|\W)*\*\/$/
      18. ref            regex => /^(\s)*ref$/
      19. internal       regex => /^(\s)*internal$/
 
-    <subtitle> Condicionales </subtitle>
+[]  <subtitle> Condicionales </subtitle>
      20. if
      21. else
      22. switch
@@ -169,7 +170,7 @@ Comentario multilinea: /**/     regex => /^\/\*{1}(\w|\W)*\*\/$/
      73. in
      74. out
 
-    <subtitle> Using y namespace </subtitle>
+[X]  <subtitle> Using y namespace </subtitle>
      75. using  regex => /^using$/
      76. namespace  regex => /^namespace$/
 

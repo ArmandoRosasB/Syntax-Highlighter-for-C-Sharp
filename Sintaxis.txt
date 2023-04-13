@@ -60,8 +60,8 @@ Llaves: []          regex => / \[ /     regex => / \] /
 Corchetes {}        regex => / \{ /     regex => / \} /
 
 <title> Comillas </title>
-Simples: ''         regex => /^\'{1}(\w|\W)*\'{1}$/
-Dobles: ""          regex => /^\"{1}(\w|\W)*\"{1}$/
+Simples: ''         regex => /'([^"]){1}'/
+Dobles: ""          regex => /"([^"])*"/
 <title> Comentarios </title>
 
 Comentario unilinea: //         regex => /^(\/){2}(\w|\W)*$/
@@ -170,8 +170,8 @@ Comentario multilinea: /**/     regex => /^\/\*{1}(\w|\W)*\*\/$/
      74. out
 
     <subtitle> Using y namespace </subtitle>
-     75. using  regex => /^\s*using\s*\b/
-     76. namespace  regex => /\s*namespace\s*\b/
+     75. using  regex => /^using$/
+     76. namespace  regex => /^namespace$/
 
 <title> Identificadores válidos </title>
  - Deben comenzar con letra o underscore

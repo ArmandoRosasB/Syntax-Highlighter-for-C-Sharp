@@ -17,11 +17,20 @@
 (define foot "</body></html>")
 
 ;; Read C# file
+;; https://docs.racket-lang.org/teachpack/2htdpbatch-io.html
+(require 2htdp/batch-io)
+(read-words/line "read.cs")
+
 (with-input-from-file "read.cs"
       (lambda ()
       (read-string 1000)))
 
 ;; Regex
+(define namespace
+      lambda(check)
+      (cond
+      []))
+
 
 ;; Output file creation
 (with-output-to-file "index.html"

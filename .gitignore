@@ -1,6 +1,4 @@
-# Archivos para tests jeje
-tests/css_file/test.rkt
-tests/css_file/*.bak
-
-tests/css_inline/test.rkt
-tests/css_inline/*.bak
+# Archivos personales Ramona
+tests/css_file/
+tests/Test.rkt
+tests/*.bak

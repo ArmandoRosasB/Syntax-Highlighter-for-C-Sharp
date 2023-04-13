@@ -14,29 +14,25 @@
 
 ;; Regex 
 (define text1 (regexp-replace* #rx"\n" text "<br>"))
-;; (define text? (regexp-replace* #rx"\\s{4}" text? "&nbsp;"))
-(define text2 (regexp-replace* #rx"namespace" text1 "<span style='color:red;'>namespace</span>"))
-(define text3 (regexp-replace* #rx"class" text2 "<span style='color:red;'>class</span>"))
+(define text2 (regexp-replace* #rx"\\s{4}" text1 "&nbsp;"))
+
 ;; Ciclos regex
-;; En donde esta la recursividad? :(
 (define parseContent
-  (lambda (lst)
+  (lambda (lst txt)
          (cond
-           [(empty? lst) empty]
-           [(string-replace text3 (car lst) (string-append "<span style='color:yellow;'>" (car lst) "</span>"))]
-           [parseContent((cdr lst))])))
+           [(empty? lst) txt]
+           [(string-replace (parseContent (cdr lst) txt) (car lst) (string-append "<span style='color:yellow;'>" (car lst) "</span>"))])))
 
 ;; Regex listas
-(define strings (regexp-match* #rx"(\")([^(\")])*(\")" text3))
-(define text4 (parseContent strings))
-
+(define strings (regexp-match* #rx"(\")([^(\")])*(\")" text2))
+(define text3 (parseContent strings text2))
 
 ;; Output file creation
 (with-output-to-file "index.html"
       (lambda () (printf head)))
 
 (with-output-to-file "index.html"  #:mode 'binary  #:exists 'append #:permissions #o666 #:replace-permissions? #f
-(lambda () (printf text4)))
+(lambda () (printf text3)))
       
 (with-output-to-file "index.html" #:mode 'binary  #:exists 'append #:permissions #o666 #:replace-permissions? #f
       (lambda () (printf foot)))

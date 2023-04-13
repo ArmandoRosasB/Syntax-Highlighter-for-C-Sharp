@@ -35,3 +35,18 @@ using
 
 namespace
 using uhdkfsh using unsing
+
+! 
+& 
+^ 
+|
+&& 
+|| 
+~ 
+<< 
+>> 
+>>>
+i++
+c--
+i/c*h%7 = ?
+!not

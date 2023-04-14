@@ -1,1 +1,1 @@
-body {background:#2C2B34;color:white;} .strings{color: yellow;} .use-namespc{color: red;} .condicionales {color: blue;} .comentarios {color: gray;} .operadores-simples {color: red;} .logico-booleano{color: purple;}
+body {background:#2C2B34;color:white;} .strings{color: yellow;} .strings span{color: yellow;} .use_namespc{color: red;} .condicionales {color: blue;} .comentarios {color: gray;} .comentarios span {color: gray;}  .operadores{color: purple;}

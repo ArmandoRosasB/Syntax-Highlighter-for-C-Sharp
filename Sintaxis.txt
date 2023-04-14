@@ -92,6 +92,7 @@ Corchetes {}        regex => / \{ /     regex => / \} /
      17. params         regex => /^(\s)*params$/
      18. ref            regex => /^(\s)*ref$/
      19. internal       regex => /^(\s)*internal$/
+     20. var
 
 []  <subtitle> Condicionales </subtitle>
      20. if

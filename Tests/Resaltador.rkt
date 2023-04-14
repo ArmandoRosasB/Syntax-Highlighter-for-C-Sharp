@@ -47,26 +47,26 @@
 ;; Condicionales
 ;; (define condicionales (regexp-match* #rx"if|else|switch|case|default" text3)) 
 ;; (define text4 (parseContent-recursive condicionales "condicionales" text3))
-(define condicionales '(#rx"do" #rx"while" #rx"for" #rx"foreach"))
-(define condicionales-match
-      (lambda (lst txt)
-      (cond
-      [(empty? lst) txt]
-      [(parseContent (regexp-match (car lst) txt) "condicionales" (condicionales-match (cdr lst) txt))])))
-(define text4 (condicionales-match condicionales text3))
-
-;; Comentarios multilínea y unilínea
-(define comentarios (regexp-match* #rx"([/][*].*[*][/])|([/][/][^(<b)]*)" text4)) 
-(define text5 (parseContent-recursive comentarios "comentarios" text4))
-
-;; Ciclos
 (define ciclos '(#rx"do" #rx"while" #rx"for" #rx"foreach"))
 (define ciclos-match
       (lambda (lst txt)
       (cond
       [(empty? lst) txt]
       [(parseContent (regexp-match (car lst) txt) "ciclos" (ciclos-match (cdr lst) txt))])))
-(define text6 (ciclos-match ciclos text5))
+(define text4 (ciclos-match ciclos text3))
+
+;; Comentarios multilínea y unilínea
+(define comentarios (regexp-match* #rx"([/][*].*[*][/])|([/][/][^(<b)]*)" text4)) 
+(define text5 (parseContent-recursive comentarios "comentarios" text4))
+
+;; Ciclos
+(define condicionales '(#rx"if" #rx"else" #rx"switch" #rx"default"))
+(define condicionales-match
+      (lambda (lst txt)
+      (cond
+      [(empty? lst) txt]
+      [(parseContent (regexp-match (car lst) txt) "condicionales" (condicionales-match (cdr lst) txt))])))
+(define text6 (condicionales-match condicionales text5))
   
 ;; Operadores
 (define operadores '(#rx"[+]+" #rx"[-]+" #rx"[%]"))
@@ -79,7 +79,7 @@
 (define text7 (operadores-match operadores text6))
 
 ;; Tipos
-(define tipos '(#rx"int" #rx"uint" #rx"float" #rx"double" #rx"long" #rx"ulong" #rx"decimal" #rx"string" #rx"char" #rx"bool" #rx"short"  #rx"ushort"  #rx"byte"  #rx"sbyte" #rx"params" #rx"ref" #rx"internal"  #rx"stackalloc"  #rx"fixed")) 
+(define tipos '(#rx"int" #rx"uint" #rx"float" #rx"double" #rx"long" #rx"ulong" #rx"decimal" #rx"string" #rx"char" #rx"bool" #rx"short"  #rx"ushort"  #rx"byte"  #rx"sbyte" #rx"params" #rx"ref" #rx"internal"  #rx"stackalloc"  #rx"fixed" #rx"var")) 
 (define tipos-match
       (lambda (lst txt)
       (cond

@@ -1,69 +1,68 @@
 <title> Operadores </title>
 
-<subtitle> Aritmeticos </subtitle>
+[X]  <subtitle> Aritmeticos </subtitle>
 
-Incremento: ++
-    Posfijo: ++i    regex => / ^(\+\+)\s*([A-z]{1})(\w)*$ /
-    Prefijo: i++    regex => / ^([A-z]{1})(\w)*\s*(\+\+)$ /
-
-
-Decremento: --
-    Posfijo: --i    regex => / ^(\-\-)\s*([A-z]{1})(\w)*$ /
-    Prefijo: i--    regex => / ^([A-z]{1})(\w)*\s*(\-\-)$ /
-
-Unario Mas: +       regex => / ^(\+)\s*([A-z]{1})(\w)*$ /
-    Ej. +i          
-Unario Menos: -     regex => / ^(\-)\s*([A-z]{1})(\w)*$ /
-    Ej. -i      
+        Incremento: ++
+            Posfijo: ++i    regex => / ^(\+\+)\s*([A-z]{1})(\w)*$ /
+            Prefijo: i++    regex => / ^([A-z]{1})(\w)*\s*(\+\+)$ /
 
 
-Multiplicacion: *   regex => / \* /
-Division: /         regex => / \/ /
-Modulo: %           regex => / \% /
-Suma: +             regex => / \+ /
-Resta: -            regex => / \- /
+        Decremento: --
+            Posfijo: --i    regex => / ^(\-\-)\s*([A-z]{1})(\w)*$ /
+            Prefijo: i--    regex => / ^([A-z]{1})(\w)*\s*(\-\-)$ /
+
+        Unario Mas: +       regex => / ^(\+)\s*([A-z]{1})(\w)*$ /
+            Ej. +i          
+        Unario Menos: -     regex => / ^(\-)\s*([A-z]{1})(\w)*$ /
+            Ej. -i      
 
 
-<subtitle> Comparacion </subtitle>
-
-Menor que: <                regex => \/ < /            
-Mayor que: >                regex => \/ > /
-Menor o igual que: <=       regex => \/ <= /
-Mayor o igual que: >=       regex => \/ >= /
-
-<subtitle> Logicos Booleanos </subtitle>
-
-Negacion Logica: !          regex => / \! /  
-    Ej. !a
-
-AND logico: &                   regex => / \& / 
-OR exclusivo logico: ^          regex => / \^ / 
-OR logico: |                    regex => / \| / 
-AND logico condicional: &&      regex => / \(&&) / 
-OR logico condicional: ||       regex => / \(||) / 
+        Multiplicacion: *   regex => / \* /
+        Division: /         regex => / \/ /
+        Modulo: %           regex => / \% /
+        Suma: +             regex => / \+ /
+        Resta: -            regex => / \- /
 
 
-<subtitle> Desplazamiento </subtitle>
-Complemento bit a bit: ~                        regex => / \~ / 
-Desplazamiento a la izquierda: <<               regex => / \(<<) / 
-Desplazamieto a la derecha: >>                  regex => / \(>>) / 
-Desplazamiento a la derecha sin signo: >>>      regex => / \(>>>) / 
+[X?]  <subtitle> Comparacion </subtitle>
+        Menor que: <                regex => \/ < /            
+        Mayor que: >                regex => \/ > /
+        Menor o igual que: <=       regex => \/ <= /
+        Mayor o igual que: >=       regex => \/ >= /
+
+[X?]  <subtitle> Logicos Booleanos </subtitle>
+
+        Negacion Logica: !          regex => / \! /  
+            Ej. !a
+
+        AND logico: &                   regex => / \& / 
+        OR exclusivo logico: ^          regex => / \^ / 
+        OR logico: |                    regex => / \| / 
+        AND logico condicional: &&      regex => / \(&&) / 
+        OR logico condicional: ||       regex => / \(||) / 
 
 
-<subtitle> Igualdad </subtitle>
-Igualdad: ==        regex => / \== / 
-Desigualdad: !=     regex => / \!= / 
+[!X]    <subtitle> Desplazamiento </subtitle>
+        Complemento bit a bit: ~                        regex => / \~ / 
+        Desplazamiento a la izquierda: <<               regex => / \(<<) / 
+        Desplazamieto a la derecha: >>                  regex => / \(>>) / 
+        Desplazamiento a la derecha sin signo: >>>      regex => / \(>>>) / 
 
-<title> Parentesis </title>
-Parentesis: ()      regex => / \( /     regex => / \) /
-Llaves: []          regex => / \[ /     regex => / \] /
-Corchetes {}        regex => / \{ /     regex => / \} /
+
+[!X]  <subtitle> Igualdad </subtitle>
+        Igualdad: ==        regex => / \== / 
+        Desigualdad: !=     regex => / \!= / 
+
+[X]  <title> Parentesis </title>
+        Parentesis: ()      regex => / \( /     regex => / \) /
+        Llaves: []          regex => / \[ /     regex => / \] /
+        Corchetes {}        regex => / \{ /     regex => / \} /
 
 [X]  <title> Comillas </title>
      Simples: ''         regex => /'([^"]){1}'/
      Dobles: ""          regex => /"([^"])*"/
 
-[]  <title> Comentarios </title>
+[X]  <title> Comentarios </title>
     Comentario unilinea: //         regex => /^(\/){2}(\w|\W)*$/
                                              /^(\/\/)(\w|\W|\s)*(\<br\>)$/
     Comentario multilinea: /**/     regex => / (\/\*)([^(\*\/)])*\*\/ /
@@ -72,55 +71,55 @@ Corchetes {}        regex => / \{ /     regex => / \} /
 <title> Palabras reservadas </title>
  - C# cuenta con 76 palabras reservadas
 
-    <subtitle> Tipos de datos y modificadores </subtitle>
-     1. int             regex => /^(\s)*int$/
-     2. uint            regex => /^(\s)*uint$/
-     3. long            regex => /^(\s)*long$/
-     4. ulong           regex => /^(\s)*ulong$/
-     5. float           regex => /^(\s)*float$/
-     6. double          regex => /^(\s)*double$/
-     7. decimal         regex => /^(\s)*decimal$/   
-     8. string          regex => /^(\s)*string$/
-     9. char            regex => /^(\s)*char$/
-     10. bool           regex => /^(\s)*bool$/
-     11. short          regex => /^(\s)*short$/
-     12. ushort         regex => /^(\s)*ushort$/
-     13. byte           regex => /^(\s)*byte$/
-     14. sbyte          regex => /^(\s)*sbyte$/
-     15. stackalloc     regex => /^(\s)*stackalloc$/
-     16. fixed          regex => /^(\s)*fixed$/
-     17. params         regex => /^(\s)*params$/
-     18. ref            regex => /^(\s)*ref$/
-     19. internal       regex => /^(\s)*internal$/
-     20. var
+[X]     <subtitle> Tipos de datos y modificadores </subtitle>
+        1. int             regex => /^(\s)*int$/
+        2. uint            regex => /^(\s)*uint$/
+        3. long            regex => /^(\s)*long$/
+        4. ulong           regex => /^(\s)*ulong$/
+        5. float           regex => /^(\s)*float$/
+        6. double          regex => /^(\s)*double$/
+        7. decimal         regex => /^(\s)*decimal$/   
+        8. string          regex => /^(\s)*string$/
+        9. char            regex => /^(\s)*char$/
+        10. bool           regex => /^(\s)*bool$/
+        11. short          regex => /^(\s)*short$/
+        12. ushort         regex => /^(\s)*ushort$/
+        13. byte           regex => /^(\s)*byte$/
+        14. sbyte          regex => /^(\s)*sbyte$/
+        15. stackalloc     regex => /^(\s)*stackalloc$/
+        16. fixed          regex => /^(\s)*fixed$/
+        17. params         regex => /^(\s)*params$/
+        18. ref            regex => /^(\s)*ref$/
+        19. internal       regex => /^(\s)*internal$/
+        20. var            regex => /^(\s)*var$/
 
-[]  <subtitle> Condicionales </subtitle>
-     20. if
-     21. else
-     22. switch
-     23. case
-     24. default
+[X]  <subtitle> Condicionales </subtitle>
+     21. if
+     22. else
+     23. switch
+     24. case
+     25. default
 
-    <subtitle> Ciclos </subtitle>
-     25. do
-     26. while
-     27. for
-     28. foreach
+[X]  <subtitle> Ciclos </subtitle>
+     26. do
+     27. while
+     28. for
+     29. foreach
 
-    <subtitle> Instrucciones jump </subtitle>
-     29. return  regex => /^\s*return\s*\b/
-     30. continue  regex => /^\s*continue\s*\b/
-     31. break  regex => /^\s*break\s*\b/
-     32. goto
+[X]  <subtitle> Instrucciones jump </subtitle>
+     30. return  regex => /^\s*return\s*\b/
+     31. continue  regex => /^\s*continue\s*\b/
+     32. break  regex => /^\s*break\s*\b/
+     33. goto
 
-    <subtitle> Nulo </subtitle>
-     33. null
+[X]  <subtitle> Nulo </subtitle>
+     34. null
 
-    <subtitle> Booleanos </subtitle>
+[X]  <subtitle> Booleanos </subtitle>
      34. true
      35. false
 
-    <subtitle> Clases, metodos y mas </subtitle>
+[X]  <subtitle> Clases, metodos y mas </subtitle>
      36. public
      37. private
      38. static
@@ -143,14 +142,14 @@ Corchetes {}        regex => / \{ /     regex => / \} /
      55. sealed
      56. void
 
-    <subtitle> Estructuras </subtitle>
+[X]  <subtitle> Estructuras </subtitle>
      57. const
      58. struct
      59. enum
      60. new
      61. interface
 
-    <subtitle> Bloques </subtitle>
+[X]  <subtitle> Bloques </subtitle>
      62. try  regex => /^\s*try/
      63. catch
      64. throw
@@ -159,7 +158,7 @@ Corchetes {}        regex => / \{ /     regex => / \} /
      67. unchecked
      68. lock
 
-    <subtitle> Tipo y tamaño </subtitle>
+[X]  <subtitle> Tipo y tamaño </subtitle>
      69. sizeof
      70. typeof
 
@@ -167,7 +166,7 @@ Corchetes {}        regex => / \{ /     regex => / \} /
      71. is
      72. as
 
-    <subtitle> Entrada y salida </subtitle>
+[X]    <subtitle> Entrada y salida </subtitle>
      73. in
      74. out
 
@@ -175,7 +174,7 @@ Corchetes {}        regex => / \{ /     regex => / \} /
      75. using  regex => /^using$/
      76. namespace  regex => /^namespace$/
 
-<title> Identificadores válidos </title>
- - Deben comenzar con letra o underscore
- - No deben ser iguales a las palabras reservadas
- - No se aceptan inicios con números o signos
+[?]      <title> Identificadores válidos </title>
+        - Deben comenzar con letra o underscore
+        - No deben ser iguales a las palabras reservadas
+        - No se aceptan inicios con números o signos

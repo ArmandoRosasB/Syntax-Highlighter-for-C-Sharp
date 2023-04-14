@@ -1,0 +1,14 @@
+Regex operadores
+
+(regexp-match* #px"<[^(/span|span)]" "a <<b a < b a<b a<<b <span class='s'>s</span>")
+
+;; Operadores
+(define operadores '(#px"\\+" #px"\\-" #px"\\%" #px"\\b\\&\\b" #px"\\b\\|\\b" #px"\\b\\^\\b"  #px"\\b\\*\\b" #px"\\b\\/\\b" #px"\\b\\<\\b" #px"\\b\\>\\b" #px"\\b\\=\\b" #px"\\b\\!\\b" #px"\\b\\~\\b"))
+(define text7 (match operadores text6 "operador")) 
+
+;; métodos
+(string-split "System.out.rfre.test" #px"\\.")
+¿Cómo reemplazar string en una posición?
+
+#FF9F1C
+Argumentos de funciones

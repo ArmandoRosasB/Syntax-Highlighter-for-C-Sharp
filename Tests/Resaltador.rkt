@@ -3,7 +3,7 @@
 ;; HTML components
 (define head "<!DOCTYPE html><html lang='en'><head><meta charset='UTF-8'><meta http-equiv='X-UA-Compatible' content='IE=edge'><meta name='viewport' content='width=device-width, initial-scale=1.0'><link rel='stylesheet' href='styles.css'><title>C# code editor</title></head><body><pre>")
 (define foot "</pre></body></html>")
-(define styles "body {background:#2C2B34;color:white;} .cadena{color: yellow;} .cadena span{color: yellow;} .use_namespc{color: red;} .condicionales {color: blue;} .comentarios {color: gray;} .comentarios span {color: gray;}  .operadores{color: purple;} .tipos{color: blue;} .ciclos{color: green;} .parentesis{color: lime}")
+(define styles "body {background:#2C2B34;color:white;} .cadena{color: yellow;} .cadena span{color: yellow;} .use_namespc{color: red;} .condicionales {color: blue;} .comentarios {color: gray;} .comentarios span {color: gray;}  .operadores{color: red;} .tipos{color: blue;} .ciclos{color: green;} .parentesis{color: lime} .jump{color: rebeccapurple} .flag{color: magenta;}")
 
 ;; Read C# file
 ;; https://docs.racket-lang.org/teachpack/2htdpbatch-io.html
@@ -96,6 +96,24 @@
       [(parseContent (regexp-match (car lst) txt) "parentesis" (parentesis-match (cdr lst) txt))])))
 (define text9 (parentesis-match parentesis text8))
 
+;; jump
+(define jump '(#rx"return" #rx"continue" #rx"break" #rx"goto")) 
+(define jump-match
+      (lambda (lst txt)
+      (cond
+      [(empty? lst) txt]
+      [(parseContent (regexp-match (car lst) txt) "jump" (jump-match (cdr lst) txt))])))
+(define text10 (jump-match jump text9))
+
+;; flag
+(define flag '(#rx"true" #rx"false")) 
+(define flag-match
+      (lambda (lst txt)
+      (cond
+      [(empty? lst) txt]
+      [(parseContent (regexp-match (car lst) txt) "flag" (flag-match (cdr lst) txt))])))
+(define text11 (flag-match flag text10))
+
 ;; Output CSS creation
 (with-output-to-file "styles.css"
       (lambda () (printf styles)))
@@ -105,7 +123,7 @@
       (lambda () (printf head)))
 
 (with-output-to-file "index.html"  #:mode 'binary  #:exists 'append #:permissions #o666 #:replace-permissions? #f
-(lambda () (printf text9)))
+(lambda () (printf text11)))
       
 (with-output-to-file "index.html" #:mode 'binary  #:exists 'append #:permissions #o666 #:replace-permissions? #f
       (lambda () (printf foot)))

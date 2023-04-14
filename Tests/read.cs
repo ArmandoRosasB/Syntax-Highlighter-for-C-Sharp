@@ -1,52 +1,32 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+//Esto es un comentario
 /*
-    Hello World 
-        --> Random tests
+Esto tambien es un comentario
 */
-
-void DisplayCharacter(char ch) {
-    if (char.IsUpper(ch)) {
-        Console.WriteLine($"An uppercase letter: {ch}");
-    } else if (char.IsLower(ch)) {
-        Console.WriteLine($"A lowercase letter: {ch}");
-    } else if (char.IsDigit(ch)) {
-        Console.WriteLine($"A digit: {ch}");
-    } else {
-        Console.WriteLine($"Not alphanumeric character: {ch}");
-    }
-}
-
-namespace HelloWorld {
-    class Hello {         
-        static void Main(string[] args) {
-            System.Console.WriteLine("Hello World!");
-            System.Console.WriteLine("Goodbye");
-        }
-
-        static void tests() {
-            // Condicionales
-            DisplayCharacter(',');
+namespace Fibonacci
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            
+            int a, b, limite, i, auxiliar; 
+            Console.WriteLine("Ingrese el número de numeros de Fibonacci que desea mostrar");
+            limite = int.Parse(Console.ReadLine()); 
+            a = 0;
+            b = 1; 
+            for (i = 0; i < limite; i++)  
+            {
+                auxiliar = a;
+                a = b; 
+                b = auxiliar + a; 
+                Console.WriteLine(a); 
+            }
+            Console.ReadKey(); 
         }
     }
+    // Termine
 }
-
-// end-of-file
-
-using 
-
-namespace
-using uhdkfsh using unsing
-
-! 
-& 
-^ 
-|
-&& 
-|| 
-~ 
-<< 
->> 
->>>
-i++
-c--
-i/c*h%7 = ?
-!not

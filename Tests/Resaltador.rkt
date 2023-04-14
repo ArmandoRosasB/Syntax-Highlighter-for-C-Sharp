@@ -3,7 +3,7 @@
 ;; HTML components
 (define head "<!DOCTYPE html><html lang='en'><head><meta charset='UTF-8'><meta http-equiv='X-UA-Compatible' content='IE=edge'><meta name='viewport' content='width=device-width, initial-scale=1.0'><link rel='stylesheet' href='styles.css'><title>C# code editor</title></head><body><pre>")
 (define foot "</pre></body></html>")
-(define styles "body {background:#2C2B34;color:white;} .strings{color: yellow;} .strings span{color: yellow;} .use_namespc{color: red;} .condicionales {color: blue;} .comentarios {color: gray;} .comentarios span {color: gray;}  .operadores{color: purple;}")
+(define styles "body {background:#2C2B34;color:white;} .cadena{color: yellow;} .cadena span{color: yellow;} .use_namespc{color: red;} .condicionales {color: blue;} .comentarios {color: gray;} .comentarios span {color: gray;}  .operadores{color: purple;} .tipos{color: blue;} .ciclos{color: green;} .parentesis{color: lime}")
 
 ;; Read C# file
 ;; https://docs.racket-lang.org/teachpack/2htdpbatch-io.html
@@ -31,32 +31,70 @@
 
 ;; Comillas dobles y simples
 (define strings (regexp-match* #rx"((\")([^(\")])*(\"))|((\')([^(\")]){1}(\'))" text1))
-(define text2 (parseContent-recursive strings "strings" text1))
+(define text2 (parseContent-recursive strings "cadena" text1))
 
 ;; Using - namespace
-(define use-namespc (regexp-match* #rx"using|namespace" text2))  
-(define text3 (parseContent-recursive use-namespc "use_namespc" text2))
+;; (define use-namespc (regexp-match* #rx"using|namespace" text2))  
+;; (define text3 (parseContent-recursive use-namespc "use_namespc" text2))
+(define use_namespc '(#rx"using" #rx"namespace"))
+(define use_namespc-match
+      (lambda (lst txt)
+      (cond
+      [(empty? lst) txt]
+      [(parseContent (regexp-match (car lst) txt) "use_namespc" (use_namespc-match (cdr lst) txt))])))
+(define text3 (use_namespc-match use_namespc text2))
 
 ;; Condicionales
-(define condicionales (regexp-match* #rx"if|else|switch|case|default" text3)) 
-(define text4 (parseContent-recursive condicionales "condicionales" text3))
+;; (define condicionales (regexp-match* #rx"if|else|switch|case|default" text3)) 
+;; (define text4 (parseContent-recursive condicionales "condicionales" text3))
+(define condicionales '(#rx"do" #rx"while" #rx"for" #rx"foreach"))
+(define condicionales-match
+      (lambda (lst txt)
+      (cond
+      [(empty? lst) txt]
+      [(parseContent (regexp-match (car lst) txt) "condicionales" (condicionales-match (cdr lst) txt))])))
+(define text4 (condicionales-match condicionales text3))
 
 ;; Comentarios multilínea y unilínea
-(define comentarios (regexp-match* #rx"[/][*].*[*][/]|[/][/][^<br>]*" text4)) 
+(define comentarios (regexp-match* #rx"([/][*].*[*][/])|([/][/][^(<b)]*)" text4)) 
 (define text5 (parseContent-recursive comentarios "comentarios" text4))
 
+;; Ciclos
+(define ciclos '(#rx"do" #rx"while" #rx"for" #rx"foreach"))
+(define ciclos-match
+      (lambda (lst txt)
+      (cond
+      [(empty? lst) txt]
+      [(parseContent (regexp-match (car lst) txt) "ciclos" (ciclos-match (cdr lst) txt))])))
+(define text6 (ciclos-match ciclos text5))
+  
 ;; Operadores
-(define operadores '(#rx"[+]" #rx"[-]" #rx"[*]" #rx"[%]"))
+(define operadores '(#rx"[+]+" #rx"[-]+" #rx"[%]"))
 (define operadores-match
       (lambda (lst txt)
       (cond
       [(empty? lst) txt]
       [(parseContent (regexp-match (car lst) txt) "operadores" (operadores-match (cdr lst) txt))])))
       ;;[(regexp-match (car lst) (operadores-match (cdr lst) txt))])))
-(define text6 (operadores-match operadores text5))
-text6
+(define text7 (operadores-match operadores text6))
 
+;; Tipos
+(define tipos '(#rx"int" #rx"uint" #rx"float" #rx"double" #rx"long" #rx"ulong" #rx"decimal" #rx"string" #rx"char" #rx"bool" #rx"short"  #rx"ushort"  #rx"byte"  #rx"sbyte" #rx"params" #rx"ref" #rx"internal"  #rx"stackalloc"  #rx"fixed")) 
+(define tipos-match
+      (lambda (lst txt)
+      (cond
+      [(empty? lst) txt]
+      [(parseContent (regexp-match (car lst) txt) "tipos" (tipos-match (cdr lst) txt))])))
+(define text8 (tipos-match tipos text7))
 
+;; Parentesis
+(define parentesis '(#rx"[(]" #rx"[)]" #rx"[[]" #rx"[]]" #rx"[{]" #rx"[}]")) 
+(define parentesis-match
+      (lambda (lst txt)
+      (cond
+      [(empty? lst) txt]
+      [(parseContent (regexp-match (car lst) txt) "parentesis" (parentesis-match (cdr lst) txt))])))
+(define text9 (parentesis-match parentesis text8))
 
 ;; Output CSS creation
 (with-output-to-file "styles.css"
@@ -67,7 +105,7 @@ text6
       (lambda () (printf head)))
 
 (with-output-to-file "index.html"  #:mode 'binary  #:exists 'append #:permissions #o666 #:replace-permissions? #f
-(lambda () (printf text6)))
+(lambda () (printf text9)))
       
 (with-output-to-file "index.html" #:mode 'binary  #:exists 'append #:permissions #o666 #:replace-permissions? #f
       (lambda () (printf foot)))

@@ -57,7 +57,7 @@
 (define text6 (match condicionales text5 "condicionales"))
   
 ;; Operadores
-(define operadores '(#px"\\+" #px"\\-" #px"\\%" #px"\\b\\&\\b" #px"\\b\\|\\b" #px"\\b\\^\\b"  #px"\\b\\*\\b" #px"\\b\\/\\b" #px"\\b\\<\\b" #px"\\b\\>\\b" #px"\\b\\=\\b" #px"\\b\\!\\b" #px"\\b\\~\\b"))
+(define operadores '(#px"\\+" #px"\\-" #px"\\%" #px"&{1}" #px"\\|{1}" #px"\\^{1}"  #px"\\*{1}" #px"/{1}(?!span)" #px"<{1}(?!(span|/span|br))" #px"(?<!span)(?<!')(?<!br)>{1}" #px"(?<!class)={1}" #px"!" #px"\\b\\~\\b"))
 (define text7 (match operadores text6 "operador")) 
 
 ;; Tipos de datos

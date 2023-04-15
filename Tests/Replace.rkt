@@ -38,6 +38,10 @@
 text4
 
 (regexp-match* #px"(<[^(/span|span)]){1}" "a <<b  <span class='s'>s</span>")
+(regexp-match* #px"<[^(/span|span)]" "a <<b a < b a<b a<<b <span class='s'>s</span>")
+(regexp-replace* #px"<{1}(?!(span|/span|br))" "a <<b a < b a<b a<<b <br> <span class='s'>s</span>" "?") 
+(regexp-replace* #px"(?<!span)(?<!')(?<!br)>{1}" "a >>b a > b a>b a>>b <br> <span class='s'>s</span>" "?")
+(regexp-replace* #px"(?<!class)={1}" "a ==b a = b a=b a==b <span class='s'>s</span> <br> <span class='s'>s</span>" "?")
 
 ;;(define text5 (regexp-replace* #px"\\b>\\b" text (string-append "<span class='---'>" (car (regexp-match #px"\\b>\\b" text)) "</span> ")))
 ;;text5

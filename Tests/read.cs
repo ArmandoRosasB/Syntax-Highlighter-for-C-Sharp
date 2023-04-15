@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-//Esto es un comentario
-
 /*
-    Esto también es un comentario
+Codigo de prueba 
+
+Autores del resaltador:
+    Ramona Najera Fuentes
+    Jose Armando Rosas Balderas
 */
+
+// Fibonacci
 namespace Fibonacci {
     class Program {
         static void Main(string[] args) {
@@ -26,9 +30,10 @@ namespace Fibonacci {
         }
     }  
 }
-// Terminé
 
-public class Solution {
+
+// Validar parentesis
+public class SolutionOne {
     public bool IsValid(string s) {
         List<char> arr = s.ToList();
             
@@ -73,7 +78,7 @@ public class Solution {
 
   class ValidParentheses {
        public static void main(string[] args) {
-            var solution = new Solution();
+            var solution = new SolutionOne();
 
             if (solution.IsValid(Console.ReadLine())) {
                 Console.WriteLine("valid");
@@ -82,3 +87,70 @@ public class Solution {
             }
         }
     }
+
+    // Validar palindromo
+    public class SolutionTwo {
+    public bool IsPalindrome(string s) {
+
+      System.Text.RegularExpressions.Regex rgx = 
+            new System.Text.RegularExpressions.Regex("[^a-zA-Z0-9]");
+      s = rgx.Replace(s.ToLower(),"");
+      int l = 0;
+      int r = s.Length - 1;
+
+      while(l<=r)
+      {
+        if (s[l] == s[r])
+        {
+          l++;
+          r--;
+        }
+        else 
+          return false;
+      }
+      return true;
+    }
+}
+
+// Remover enesimo numero de una lista
+
+/*
+  Definition for singly-linked list.
+  public class ListNode {
+      public int val;
+      public ListNode next;
+      public ListNode(int val=0, ListNode next=null) {
+          this.val = val;
+          this.next = next;
+      }
+  }
+ */
+ 
+public class Solution {
+    public ListNode RemoveNthFromEnd(ListNode head, int n) {
+        if (head == null) {
+            return null;
+        }
+
+        ListNode dummy = new ListNode(0, head);
+        ListNode fast = head;
+        ListNode slow = dummy;
+
+        while (n > 0 && fast != null) {
+            fast = fast.next;
+            n -= 1;
+        }
+
+        if (n > 0) {
+            throw new ArgumentException("n must be less than or equal to length of linked list");
+        }
+
+        while (fast != null) {
+            slow = slow.next;
+            fast = fast.next;
+        }
+
+        slow.next = slow.next.next;
+        return dummy.next;
+    }
+}

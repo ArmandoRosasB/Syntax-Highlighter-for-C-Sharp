@@ -107,6 +107,10 @@
 (define numbers '(#px"\\b[\\d]+\\b"))
 (define text19 (match numbers text18 "numbers"))
 
+;; methods
+(define methods '(#px"(?<=\\.)([^\\(|;]*)(\\()"))
+(define text20 (match methods text19 "parentheses"))
+
 ;; Output CSS creation
 (with-output-to-file "styles.css"
       (lambda () (printf styles)))
@@ -116,7 +120,7 @@
       (lambda () (printf head)))
 
 (with-output-to-file "index.html"  #:mode 'binary  #:exists 'append #:permissions #o666 #:replace-permissions? #f
-(lambda () (printf text19)))
+(lambda () (printf text20)))
       
 (with-output-to-file "index.html" #:mode 'binary  #:exists 'append #:permissions #o666 #:replace-permissions? #f
       (lambda () (printf foot)))

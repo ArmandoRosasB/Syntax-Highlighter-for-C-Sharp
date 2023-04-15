@@ -11,7 +11,6 @@ using System.Text;
 namespace Fibonacci {
     class Program {
         static void Main(string[] args) {
-            
             int a, b, limite, i, auxiliar; 
             Console.WriteLine("Ingrese el número de numeros de Fibonacci que desea mostrar");
             limite = int.Parse(Console.ReadLine()); 

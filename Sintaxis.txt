@@ -1,99 +1,103 @@
 <title> Operadores </title>
+     REGEX RACKET 
+     #px"\\+" #px"\\-" #px"\\%" #px"&{1}" #px"\\|{1}" 
+     #px"\\^{1}"  #px"\\*{1}" #px"/{1}(?!span)" #px"<{1}(?!(span|/span|br))" 
+     #px"(?<!span)(?<!')(?<!br)>{1}" #px"(?<!class)={1}" #px"!" #px"\\b\\~\\b"
 
 [X]  <subtitle> Aritmeticos </subtitle>
+     
+        Multiplicacion: *  
+        Division: /       
+        Modulo: %          
+        Suma: +             
+        Resta: -            
 
-        Incremento: ++
-            Posfijo: ++i    regex => / ^(\+\+)\s*([A-z]{1})(\w)*$ /
-            Prefijo: i++    regex => / ^([A-z]{1})(\w)*\s*(\+\+)$ /
+[X]  <subtitle> Comparacion </subtitle>
 
+        Menor que: <                         
+        Mayor que: >                
+        Menor o igual que: <=       
+        Mayor o igual que: >=      
 
-        Decremento: --
-            Posfijo: --i    regex => / ^(\-\-)\s*([A-z]{1})(\w)*$ /
-            Prefijo: i--    regex => / ^([A-z]{1})(\w)*\s*(\-\-)$ /
+[X]  <subtitle> Logicos Booleanos </subtitle>
 
-        Unario Mas: +       regex => / ^(\+)\s*([A-z]{1})(\w)*$ /
-            Ej. +i          
-        Unario Menos: -     regex => / ^(\-)\s*([A-z]{1})(\w)*$ /
-            Ej. -i      
-
-
-        Multiplicacion: *   regex => / \* /
-        Division: /         regex => / \/ /
-        Modulo: %           regex => / \% /
-        Suma: +             regex => / \+ /
-        Resta: -            regex => / \- /
-
-
-[X?]  <subtitle> Comparacion </subtitle>
-        Menor que: <                regex => \/ < /            
-        Mayor que: >                regex => \/ > /
-        Menor o igual que: <=       regex => \/ <= /
-        Mayor o igual que: >=       regex => \/ >= /
-
-[X?]  <subtitle> Logicos Booleanos </subtitle>
-
-        Negacion Logica: !          regex => / \! /  
-            Ej. !a
-
-        AND logico: &                   regex => / \& / 
-        OR exclusivo logico: ^          regex => / \^ / 
-        OR logico: |                    regex => / \| / 
-        AND logico condicional: &&      regex => / \(&&) / 
-        OR logico condicional: ||       regex => / \(||) / 
+        Negacion Logica: !          
+        AND logico: &                
+        OR exclusivo logico: ^         
+        OR logico: |                   
+        AND logico condicional: &&   
+        OR logico condicional: ||     
 
 
-[!X]    <subtitle> Desplazamiento </subtitle>
-        Complemento bit a bit: ~                        regex => / \~ / 
-        Desplazamiento a la izquierda: <<               regex => / \(<<) / 
-        Desplazamieto a la derecha: >>                  regex => / \(>>) / 
-        Desplazamiento a la derecha sin signo: >>>      regex => / \(>>>) / 
+[X]   <subtitle> Desplazamiento </subtitle>
+
+        Complemento bit a bit: ~                       
+        Desplazamiento a la izquierda: <<               
+        Desplazamieto a la derecha: >>                  
+        Desplazamiento a la derecha sin signo: >>>     
 
 
-[!X]  <subtitle> Igualdad </subtitle>
-        Igualdad: ==        regex => / \== / 
-        Desigualdad: !=     regex => / \!= / 
+[X]  <subtitle> Igualdad </subtitle>
+
+        Igualdad: == 
+        Desigualdad: !=    
 
 [X]  <title> Parentesis </title>
-        Parentesis: ()      regex => / \( /     regex => / \) /
-        Llaves: []          regex => / \[ /     regex => / \] /
-        Corchetes {}        regex => / \{ /     regex => / \} /
+     REGEX RACKET #rx"[(]" #rx"[)]" #rx"[[]" #rx"[]]" #rx"[{]" #rx"[}]"
+
+        Parentesis: ()   
+        Llaves: []      
+        Corchetes {}      
 
 [X]  <title> Comillas </title>
-     Simples: ''         regex => /'([^"]){1}'/
-     Dobles: ""          regex => /"([^"])*"/
+     REGEX RACKET #rx"((\")([^(\")])*(\"))|((\')([^\"])?(\'))"
+
+     Simples: ''
+     Dobles: ""  
+
 
 [X]  <title> Comentarios </title>
-    Comentario unilinea: //         regex => /^(\/){2}(\w|\W)*$/
-                                             /^(\/\/)(\w|\W|\s)*(\<br\>)$/
-    Comentario multilinea: /**/     regex => / (\/\*)([^(\*\/)])*\*\/ /
+     REGEX RACKET #rx"([/][*][^*/]*[*][/])|([/][/][^(<)]*)"
+
+    Comentario unilinea: //        
+    Comentario multilinea: /**/  
 
 
 <title> Palabras reservadas </title>
  - C# cuenta con 76 palabras reservadas
 
 [X]     <subtitle> Tipos de datos y modificadores </subtitle>
-        1. int             regex => /^(\s)*int$/
-        2. uint            regex => /^(\s)*uint$/
-        3. long            regex => /^(\s)*long$/
-        4. ulong           regex => /^(\s)*ulong$/
-        5. float           regex => /^(\s)*float$/
-        6. double          regex => /^(\s)*double$/
-        7. decimal         regex => /^(\s)*decimal$/   
-        8. string          regex => /^(\s)*string$/
-        9. char            regex => /^(\s)*char$/
-        10. bool           regex => /^(\s)*bool$/
-        11. short          regex => /^(\s)*short$/
-        12. ushort         regex => /^(\s)*ushort$/
-        13. byte           regex => /^(\s)*byte$/
-        14. sbyte          regex => /^(\s)*sbyte$/
-        15. stackalloc     regex => /^(\s)*stackalloc$/
-        16. fixed          regex => /^(\s)*fixed$/
-        17. params         regex => /^(\s)*params$/
-        18. ref            regex => /^(\s)*ref$/
-        19. internal       regex => /^(\s)*internal$/
-        20. var            regex => /^(\s)*var$/
+     REGEX RACKET 
+     #px"\\bint\\b" #px"\\buint\\b" #px"\\bfloat\\b" #px"\\bdouble\\b" 
+     #px"\\blong\\b" #px"\\bulong\\b" #px"\\bdecimal\\b" #px"\\bstring\\b" 
+     #px"\\bchar\\b" #px"\\bbool\\b" #px"\\bshort\\b" #px"\\bushort\\b" 
+     #px"\\bbyte\\b" #px"\\bsbyte\\b" #px"\\bparams\\b" #px"\\bref\\b" 
+     #px"\\binternal\\b" #px"\\bstackalloc\\b" #px"\\bfixed\\b" #px"\\bvar\\b"
+
+        1. int      
+        2. uint      
+        3. long      
+        4. ulong      
+        5. float      
+        6. double      
+        7. decimal         
+        8. string      
+        9. char      
+        10. bool     
+        11. short     
+        12. ushort     
+        13. byte     
+        14. sbyte     
+        15. stackalloc     
+        16. fixed     
+        17. params     
+        18. ref     
+        19. internal     
+        20. var     
 
 [X]  <subtitle> Condicionales </subtitle>
+     REGEX RACKET #px"\\bif\\b" #px"\\belse\\b" #px"\\bswitch\\b" #px"\\bcase\\b" #px"\\bdefault\\b
+
      21. if
      22. else
      23. switch
@@ -101,25 +105,41 @@
      25. default
 
 [X]  <subtitle> Ciclos </subtitle>
+     REGEX RACKET #px"\\bdo\\b" #px"\\bwhile\\b" #px"\\bfor\\b" #px"\\bforeach\\b"
+
      26. do
      27. while
      28. for
      29. foreach
 
 [X]  <subtitle> Instrucciones jump </subtitle>
-     30. return  regex => /^\s*return\s*\b/
-     31. continue  regex => /^\s*continue\s*\b/
-     32. break  regex => /^\s*break\s*\b/
+     REGEX RACKET #px"\\breturn(;)?\\b" #px"\\bcontinue(;)?\\b" #px"\\bbreak(;)?\\b" #px"\\bgoto\\b"
+
+     30. return 
+     31. continue  
+     32. break
      33. goto
 
 [X]  <subtitle> Nulo </subtitle>
+     REGEX RACKET #px"\\bnull\\b"
+
      34. null
 
 [X]  <subtitle> Booleanos </subtitle>
+     REGEX RACKET #px"\\btrue\\b" #px"\\bfalse\\b"
+
      34. true
      35. false
 
 [X]  <subtitle> Clases, metodos y mas </subtitle>
+     REGEX RACKET
+     #px"\\bpublic\\b" #px"\\bstatic\\b" #px"\\bprivate\\b" #px"\\bvirtual\\b" 
+     #px"\\babstract\\b" #px"\\bprotected\\b" #px"\\bclass\\b[^=]" 
+     #px"\\bthis\\b" #px"\\bevent\\b" #px"\\bbase\\b" #px"\\bexplicit\\b" 
+     #px"\\bimplicit\\b" #px"\\boperator\\b" #px"\\bextern\\b" #px"\\bobject\\b" 
+     #px"\\boverride\\b" #px"\\breadonly\\b" #px"\\bunsafe\\b" #px"\\bdelegate\\b" 
+     #px"\\bsealed\\b" #px"\\bvoid\\b"
+
      36. public
      37. private
      38. static
@@ -143,6 +163,8 @@
      56. void
 
 [X]  <subtitle> Estructuras </subtitle>
+     REGEX RACKET #px"\\bconst\\b" #px"\\bstruct\\b" #px"\\benum" #px"\\bnew\\b" #px"\\binterface\\b"
+
      57. const
      58. struct
      59. enum
@@ -150,7 +172,11 @@
      61. interface
 
 [X]  <subtitle> Bloques </subtitle>
-     62. try  regex => /^\s*try/
+     REGEX RACKET 
+     #px"\\btry\\b" #px"\\bcatch\\b" #px"\\bthrow\\b" #px"\\bfinally\\b" 
+     #px"\\bchecked\\b" #px"\\bunchecked\\b" #px"\\block\\b"
+
+     62. try  
      63. catch
      64. throw
      65. finally
@@ -159,22 +185,27 @@
      68. lock
 
 [X]  <subtitle> Tipo y tamaño </subtitle>
+     REGEX RACKET #px"\\bsizeof\\b" #px"\\btypeof\\b"
      69. sizeof
      70. typeof
 
     <subtitle> Is as </subtitle>
+     REGEX RACKET #px"\\bis\\b" #px"\\bas\\b"
      71. is
      72. as
 
-[X]    <subtitle> Entrada y salida </subtitle>
+[X] <subtitle> Entrada y salida </subtitle>
+     REGEX RACKET #px"\\bout\\b" #px"\\bin\\b"
      73. in
      74. out
 
 [X]  <subtitle> Using y namespace </subtitle>
-     75. using  regex => /^using$/
-     76. namespace  regex => /^namespace$/
+     REGEX RACKET #px"\\busing\\b" "using" #px"\\bnamespace\\b"
+     75. using 
+     76. namespace 
 
-[?]      <title> Identificadores válidos </title>
-        - Deben comenzar con letra o underscore
-        - No deben ser iguales a las palabras reservadas
-        - No se aceptan inicios con números o signos
+EXTRA 
+
+Metodos de Clases
+REGEX RACKET
+#px"(?<=\\.)([^\\(|;]*)(\\()"

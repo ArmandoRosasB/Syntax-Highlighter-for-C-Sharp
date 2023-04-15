@@ -5,7 +5,7 @@
 (define foot "</pre></body></html>")
 
 ;; CSS component
-(define styles "body{background:#2E2E29;color:#FDFFFC;} .cadena{color:rgb(236, 203, 11);} .cadena span{color:rgb(236, 203, 11);} .use_namespc{color:#F71735;} .condicionales{color:red;} .comentarios{color:rgb(190, 190, 190);} .comentarios span{color:rgb(190, 190, 190);}  .operador{color:#F15156;} .tipos{color:#3edff5;font-style:italic;} .tipos span{color:#00BCD4;font-style:italic;} .ciclos{color:red;} .parentheses{color:#CDDC39} .jump{color:magenta;} .flag{color:#4A8FE7;} .nulo {color:rebeccapurple;font-style:italic;} .definition{color:#FF9F1C;} .oop{color:#E82164;} .bloques{color:#9C27B0;} .type_tam{color:red;} .isas{color:red;} .in_out{color:yellow;} .numbers{color:rgb(140, 84, 192);}")
+(define styles "body{background:#333333;color:#FDFFFC;} .cadena{color:rgb(236, 203, 11);} .cadena span{color:rgb(236, 203, 11);} .use_namespc{color:#F71735;} .condicionales{color:#F71735;} .comentarios{color:rgb(190, 190, 190);} .comentarios span{color:rgb(190, 190, 190);}  .operador{color:#F15156;} .tipos{color:#3edff5;font-style:italic;} .tipos span{color:#00BCD4;font-style:italic;} .ciclos{color:#F71735;} .parentheses{color:#CDDC39;} .jump{color:magenta;} .flag{color:#4A8FE7;} .nulo {color:rebeccapurple;font-style:italic;} .definition{color:#FF9F1C;} .oop{color:#E82164;} .bloques{color:#9C27B0;} .type_tam{color:#CDDC39;} .isas{color:#F71735;} .in_out{color:#F71735;} .numbers{color:rgb(140, 84, 192);}")
 
 ;; Read C# file
 ;; https://docs.racket-lang.org/teachpack/2htdpbatch-io.html
@@ -107,7 +107,7 @@
 (define numbers '(#px"\\b[\\d]+\\b"))
 (define text19 (match numbers text18 "numbers"))
 
-;; methods
+;; Methods
 (define methods '(#px"(?<=\\.)([^\\(|;]*)(\\()"))
 (define text20 (match methods text19 "parentheses"))
 

@@ -5,7 +5,7 @@
 (define foot "</pre></body></html>")
 
 ;; CSS component
-(define styles "body{background:#333333;color:#FDFFFC;} .cadena{color:rgb(236, 203, 11);} .cadena span{color:rgb(236, 203, 11);} .use_namespc{color:#E82164;} .condicionales{color:#E82164;} .comentarios{color:rgb(190, 190, 190);} .comentarios span{color:rgb(190, 190, 190);}  .operador{color:#F15156;} .tipos{color:#3edff5;font-style:italic;} .tipos span{color:#00BCD4;font-style:italic;} .ciclos{color:#E82164;} .parentheses{color:#CDDC39;} .jump{color:magenta;} .flag{color:#4A8FE7;} .nulo {color:rebeccapurple;font-style:italic;} .definition{color:#FF9F1C;} .oop{color:#E82164;} .bloques{color:#9C27B0;} .type_tam{color:#CDDC39;} .isas{color:#F71735;} .in_out{color:#F71735;} .numbers{color:rgb(140, 84, 192);}")
+(define styles "body{background:#333333;color:#FDFFFC; margin-left: 20px;} .cadena{color:rgb(247, 243, 61);} .cadena span{color:rgb(247, 243, 61);} .use_namespc{color:#E82164;} .condicionales{color:#E82164;} .comentarios{color:rgb(190, 190, 190);} .comentarios span{color:rgb(190, 190, 190);}  .operador{color:#F15156;} .tipos{color:#3edff5;font-style:italic;} .tipos span{color:#00BCD4;font-style:italic;} .ciclos{color:#E82164;} .parentheses{color:#CDDC39;} .jump{color:magenta;} .flag{color:#4A8FE7;} .nulo {color:rgb(140, 84, 192);;font-style:italic;} .definition{color:#FF9F1C;} .oop{color:#E82164;} .bloques{color:#9C27B0;} .type_tam{color:#CDDC39;} .isas{color:#F71735;} .in_out{color:#F71735;}")
 
 ;; Read C# file
 ;; https://docs.racket-lang.org/teachpack/2htdpbatch-io.html
@@ -20,7 +20,6 @@
          (cond
            [(not (list? lst)) txt]
            [(regexp-replace* regex txt (string-append "<span class='" className "'>" (car lst) "</span>"))])))
-           ;;[(string-replace txt (car lst) (string-append "<span class='" className "'>" (car lst) "</span>"))])))
 
 (define parseContent-recursive
   (lambda (lst className txt)
@@ -36,6 +35,7 @@
 
 ;; Regex 
 
+
 ;; Comillas dobles y simples
 (define strings (regexp-match* #rx"((\")([^(\")])*(\"))|((\')([^\"])?(\'))" text1))
 (define text2 (parseContent-recursive strings "cadena" text1))
@@ -49,63 +49,61 @@
 (define text4 (match ciclos text3 "ciclos"))
 
 ;; Comentarios multilínea y unilínea
-(define comentarios (regexp-match* #rx"([/][*][^*/]*[*][/])|([/][/][^(<b)]*)" text4)) 
+(define comentarios (regexp-match* #rx"([/][*].*[*][/])|([/][/][^(<b)]*)" text4)) 
 (define text5 (parseContent-recursive comentarios "comentarios" text4))
 
 ;; Ciclos
 (define condicionales '(#px"\\bif\\b" #px"\\belse\\b" #px"\\bswitch\\b" #px"\\bcase\\b" #px"\\bdefault\\b"))
-(define text6 (match condicionales text5 "condicionales"))
+(define text7 (match condicionales text5 "condicionales"))
   
 ;; Operadores
-(define operadores '(#px"\\+" #px"\\-" #px"\\%" #px"&{1}" #px"\\|{1}" #px"\\^{1}"  #px"\\*{1}" #px"/{1}(?!span)" #px"<{1}(?!(span|/span|br))" #px"(?<!span)(?<!')(?<!br)>{1}" #px"(?<!class)={1}" #px"!" #px"\\b\\~\\b"))
-(define text7 (match operadores text6 "operador")) 
+(define operadores '(#px"\\*{1}" #px"/{1}(?!span)" #px"\\+" #px"\\-" #px"\\%" #px"&{1}" #px"\\|{1}" #px"\\^{1}" #px"<{1}(?!(span|/span|br))" #px"(?<!span)(?<!')(?<!br)>{1}" #px"(?<!class)={1}" #px"!" #px"\\b\\~\\b"))
+(define text8 (match operadores text7 "operador")) 
+
 
 ;; Tipos de datos
 (define tipos '(#px"\\bint\\b" #px"\\buint\\b" #px"\\bfloat\\b" #px"\\bdouble\\b" #px"\\blong\\b" #px"\\bulong\\b" #px"\\bdecimal\\b" #px"\\bstring\\b" #px"\\bchar\\b" #px"\\bbool\\b" #px"\\bshort\\b" #px"\\bushort\\b" #px"\\bbyte\\b" #px"\\bsbyte\\b" #px"\\bparams\\b" #px"\\bref\\b" #px"\\binternal\\b" #px"\\bstackalloc\\b" #px"\\bfixed\\b" #px"\\bvar\\b")) 
-(define text8 (match tipos text7 "tipos"))
+(define text9 (match tipos text7 "tipos"))
 
 ;; Paréntesis
 (define parentesis '(#rx"[(]" #rx"[)]" #rx"[[]" #rx"[]]" #rx"[{]" #rx"[}]")) 
-(define text9 (match parentesis text8 "parentheses"))
+(define text10 (match parentesis text9 "parentheses"))
 
 ;; Jump
 (define jump '(#px"\\breturn(;)?\\b" #px"\\bcontinue(;)?\\b" #px"\\bbreak(;)?\\b" #px"\\bgoto\\b")) 
-(define text10 (match jump text9 "jump"))
+(define text11 (match jump text10 "jump"))
 
 ;; Flag
 (define flag '(#px"\\btrue\\b" #px"\\bfalse\\b")) 
-(define text11 (match flag text10 "flag"))
+(define text12 (match flag text11 "flag"))
 
 ;; Nulo
 (define nulo '(#px"\\bnull\\b")) 
-(define text12 (match nulo text11 "nulo"))
+(define text13 (match nulo text12 "nulo"))
 
 ;; Clases, métodos y más
 (define classes '(#px"\\bpublic\\b" #px"\\bstatic\\b" #px"\\bprivate\\b" #px"\\bvirtual\\b" #px"\\babstract\\b" #px"\\bprotected\\b" #px"\\bclass\\b[^=]" #px"\\bthis\\b" #px"\\bevent\\b" #px"\\bbase\\b" #px"\\bexplicit\\b" #px"\\bimplicit\\b" #px"\\boperator\\b" #px"\\bextern\\b" #px"\\bobject\\b" #px"\\boverride\\b" #px"\\breadonly\\b" #px"\\bunsafe\\b" #px"\\bdelegate\\b" #px"\\bsealed\\b" #px"\\bvoid\\b"))
-(define text13 (match classes text12 "oop"))
+(define text14 (match classes text13 "oop"))
+
 ;; Estructuras
 (define estructuras '(#px"\\bconst\\b" #px"\\bstruct\\b" #px"\\benum" #px"\\bnew\\b" #px"\\binterface\\b"))
-(define text14 (match estructuras text13 "definition"))
+(define text15 (match estructuras text14 "definition"))
 
 ;; Bloques
 (define bloques '(#px"\\btry\\b" #px"\\bcatch\\b" #px"\\bthrow\\b" #px"\\bfinally\\b" #px"\\bchecked\\b" #px"\\bunchecked\\b" #px"\\block\\b"))
-(define text15 (match bloques text14 "bloques"))
+(define text16 (match bloques text15 "bloques"))
 
 ;; Tipo y tamaño
 (define type_tam '(#px"\\bsizeof\\b" #px"\\btypeof\\b"))
-(define text16 (match type_tam text15 "type_tam"))
+(define text17 (match type_tam text16 "type_tam"))
 
 ;; Entrada y salida
 (define in_out '(#px"\\bout\\b" #px"\\bin\\b"))
-(define text17 (match in_out text16 "in_out"))
+(define text18 (match in_out text17 "in_out"))
 
 ;; is as
 (define is_as '(#px"\\bis\\b" #px"\\bas\\b"))
-(define text18 (match is_as text17 "isas"))
-
-;; Numbers
-(define numbers '(#px"\\b[\\d]+\\b"))
-(define text19 (match numbers text18 "numbers"))
+(define text19 (match is_as text18 "isas"))
 
 ;; Methods
 (define methods '(#px"(?<=\\.)([^\\(|;]*)(\\()"))
@@ -120,7 +118,7 @@
       (lambda () (printf head)))
 
 (with-output-to-file "index.html"  #:mode 'binary  #:exists 'append #:permissions #o666 #:replace-permissions? #f
-(lambda () (printf text20)))
+(lambda () (printf text19)))
       
 (with-output-to-file "index.html" #:mode 'binary  #:exists 'append #:permissions #o666 #:replace-permissions? #f
       (lambda () (printf foot)))

@@ -50,17 +50,13 @@ int main(int argc, char* argv[]) {
     regex condicionales("\\bif\\b|\\belse\\b|\\bswitch\\b|\\bcase\\b|\\bdefault\\b");
     cs = regex_replace(cs, condicionales, "<span class='condicionales'>$&</span>");
 
-    regex operadores("\\+|\\-|\\%|&{1}|\\|{1}|\\^{1}|\\*{1}|/{1}(?!span)|<{1}(?!(span|/span|br))|!|\\b\\~\\b"); //|(?<!span)(?<!')(?<!br)>{1}|(?<!class)={1}");
+    regex operadores("\\+|\\-|\\%|&{1}|\\|{1}|\\^{1}|\\*{1}|/{1}(?!span)|<{1}(?!(span|/span|br))|!|\\b\\~\\b"); //|(?<!span)(?<!')(?<!br)>{1}|(?<!class)={1}
     cs = regex_replace(cs, operadores, "<span class='operador'>$&</span>");
-
-    /*;; Operadores
-    (define operadores '(#px"\\+" #px"\\-" #px"\\%" #px"&{1}" #px"\\|{1}" #px"\\^{1}"  #px"\\*{1}" #px"/{1}(?!span)" #px"<{1}(?!(span|/span|br))" #px"(?<!span)(?<!')(?<!br)>{1}" #px"(?<!class)={1}" #px"!" #px"\\b\\~\\b"))
-    (define text7 (match operadores text6 "operador")) */
     
     regex tipos("\\bint\\b|\\buint\\b|\\bfloat\\b|\\bdouble\\b|\\blong\\b|\\bulong\\b|\\bdecimal\\b|\\bstring\\b|\\bchar\\b|\\bbool\\b|\\bshort\\b|\\bushort\\b|\\bbyte\\b|\\bsbyte\\b|\\bparams\\b|\\bref\\b|\\binternal\\b|\\bstackalloc\\b|\\bfixed\\b|\\bvar\\b");
     cs = regex_replace(cs, tipos, "<span class='tipos'>$&</span>");
     
-    regex parentesis("[(]|[)]|[[]|[]]|[{]|[}]");
+    regex parentesis("[(]|[)]|[[]|[\\]]|[{]|[}]");
     cs = regex_replace(cs, parentesis, "<span class='parentheses'>$&</span>");
 
     regex jump("\\breturn(;)?\\b|\\bcontinue(;)?\\b|\\bbreak(;)?\\b|\\bgoto\\b");
@@ -90,13 +86,8 @@ int main(int argc, char* argv[]) {
     regex is_as("\\bis\\b|\\bas\\b");
     cs = regex_replace(cs, is_as, "<span class='isas'>$&</span>");
 
-    //regex methods("(?<=\\.)([^\\(|;]*)(\\()");
-    //cs = regex_replace(cs, methods, "<span class='parentheses'>$&</span>");
-
-    /*;; Methods
-    (define methods '(#px"(?<=\\.)([^\\(|;]*)(\\()"))
-    (define text19 (match methods text18 "parentheses"))
-    */
+    regex methods("\\.{1}\\w+[^(<]");
+    cs = regex_replace(cs, methods, "<span class='parentheses'>$&</span>");
 
     html += cs;
     html += footer;

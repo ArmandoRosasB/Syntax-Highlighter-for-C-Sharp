@@ -50,7 +50,7 @@ int main(int argc, char* argv[]) {
     regex condicionales("\\bif\\b|\\belse\\b|\\bswitch\\b|\\bcase\\b|\\bdefault\\b");
     cs = regex_replace(cs, condicionales, "<span class='condicionales'>$&</span>");
 
-    regex operadores("\\+|\\-|\\%|&{1}|\\|{1}|\\^{1}|\\*{1}|/{1}(?!span)|<{1}(?!(span|/span|br))"); //|(?<!span)(?<!')(?<!br)>{1}|(?<!class)={1}|!|\\b\\~\\b");
+    regex operadores("\\+|\\-|\\%|&{1}|\\|{1}|\\^{1}|\\*{1}|/{1}(?!span)|<{1}(?!(span|/span|br))|!|\\b\\~\\b"); //|(?<!span)(?<!')(?<!br)>{1}|(?<!class)={1}");
     cs = regex_replace(cs, operadores, "<span class='operador'>$&</span>");
 
     /*;; Operadores
@@ -75,30 +75,25 @@ int main(int argc, char* argv[]) {
     regex classes("\\bpublic\\b|\\bstatic\\b|\\bprivate\\b|\\bvirtual\\b|\\babstract\\b|\\bprotected\\b|\\bclass\\b[^=]|\\bthis\\b|\\bevent\\b|\\bbase\\b|\\bexplicit\\b|\\bimplicit\\b|\\boperator\\b|\\bextern\\b|\\bobject\\b|\\boverride\\b|\\breadonly\\b|\\bunsafe\\b|\\bdelegate\\b|\\bsealed\\b|\\bvoid\\b");
     cs = regex_replace(cs, classes, "<span class='oop'>$&</span>");
 
-    /*
-    
+    regex estructuras("\\bconst\\b|\\bstruct\\b|\\benum|\\bnew\\b|\\binterface\\b");
+    cs = regex_replace(cs, estructuras, "<span class='definition'>$&</span>");
 
-    ;; Estructuras
-    (define estructuras '(#px"\\bconst\\b" #px"\\bstruct\\b" #px"\\benum" #px"\\bnew\\b" #px"\\binterface\\b"))
-    (define text14 (match estructuras text13 "definition"))
+    regex bloques("\\btry\\b|\\bcatch\\b|\\bthrow\\b|\\bfinally\\b|\\bchecked\\b|\\bunchecked\\b|\\block\\b");
+    cs = regex_replace(cs, bloques, "<span class='bloques'>$&</span>");
 
-    ;; Bloques
-    (define bloques '(#px"\\btry\\b" #px"\\bcatch\\b" #px"\\bthrow\\b" #px"\\bfinally\\b" #px"\\bchecked\\b" #px"\\bunchecked\\b" #px"\\block\\b"))
-    (define text15 (match bloques text14 "bloques"))
+    regex type_tam("\\bsizeof\\b|\\btypeof\\b");
+    cs = regex_replace(cs, type_tam, "<span class='type_tam'>$&</span>");
 
-    ;; Tipo y tamaño
-    (define type_tam '(#px"\\bsizeof\\b" #px"\\btypeof\\b"))
-    (define text16 (match type_tam text15 "type_tam"))
+    regex in_out("\\bout\\b|\\bin\\b");
+    cs = regex_replace(cs, in_out, "<span class='in_out'>$&</span>");
 
-    ;; Entrada y salida
-    (define in_out '(#px"\\bout\\b" #px"\\bin\\b"))
-    (define text17 (match in_out text16 "in_out"))
+    regex is_as("\\bis\\b|\\bas\\b");
+    cs = regex_replace(cs, is_as, "<span class='isas'>$&</span>");
 
-    ;; is as
-    (define is_as '(#px"\\bis\\b" #px"\\bas\\b"))
-    (define text18 (match is_as text17 "isas"))
+    //regex methods("(?<=\\.)([^\\(|;]*)(\\()");
+    //cs = regex_replace(cs, methods, "<span class='parentheses'>$&</span>");
 
-    ;; Methods
+    /*;; Methods
     (define methods '(#px"(?<=\\.)([^\\(|;]*)(\\()"))
     (define text19 (match methods text18 "parentheses"))
     */

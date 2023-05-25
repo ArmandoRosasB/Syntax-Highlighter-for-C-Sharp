@@ -24,12 +24,15 @@ const int SIZE = 18;
 typedef struct {
     int start, end;
 } Block;
-string cSharp;
+
 
 const string HEADER = "<!DOCTYPE html><html lang='en'><head><meta charset='UTF-8'><meta http-equiv='X-UA-Compatible' content='IE=edge'><meta name='viewport' content='width=device-width, initial-scale=1.0'><link rel='stylesheet' href='styles.css'><title>C# code editor</title></head><body><pre>";
 const string FOOTER = "</pre></body></html>";
 const string STYLES = "body{background:#333333;color:#FDFFFC;width: 90vw} .cadena{color:rgb(236, 203, 11);} .cadena span{color:rgb(236, 203, 11);} .use_namespc{color:#F71735;} .condicionales{color:#F71735;} .comentarios{color:rgb(190, 190, 190);} .comentarios span{color:rgb(190, 190, 190);}  .operador{color:#F15156;} .tipos{color:#3edff5;font-style:italic;} .tipos span{color:#00BCD4;font-style:italic;} .ciclos{color:#F71735;} .parentheses{color:#CDDC39;} .jump{color:magenta;} .flag{color:#4A8FE7;} .nulo {color:rebeccapurple;font-style:italic;} .definition{color:#FF9F1C;} .oop{color:#E82164;} .bloques{color:#9C27B0;} .type_tam{color:#CDDC39;} .isas{color:#F71735;} .in_out{color:#F71735;}";
+string DIR = "HTML_SEQ";
+string DIR2 = "HTML_PARALEL";
 
+vector<string> PATHS;
 const pair<regex, string>EXPRESIONES_REGULARES[SIZE]= {
     pair<regex, string>("((\")([^(\")])*(\"))|((\')([^\"])?(\'))", "cadena"),
     pair<regex, string>("\\busing\\b|\\bnamespace\\b", "use_namespc"), // |using
@@ -58,8 +61,7 @@ int main(int argc, char* argv[]) {
     ifstream inputFile;
     ofstream outputHTML;
 
-    string name, html, path, dir = "HTML_SEQ", dir2 = "HTML_PARALEL";
-    int acc = 1;
+    string name, html, path;
 
     if(argc != 2) {
         cout << "ERROR\nAppropiate format: ./app path" << endl;
@@ -68,26 +70,31 @@ int main(int argc, char* argv[]) {
 
     path = argv[1];
 
-    mkdir(dir.c_str(), 0777);
+    mkdir(DIR.c_str(), 0777);
 
-    outputStyles.open("./" + dir + "/styles.css", ios::out);
+    outputStyles.open("./" + DIR + "/styles.css", ios::out);
     outputStyles << STYLES; 
     outputStyles.close();
 
-    mkdir(dir2.c_str(), 0777);
+    mkdir(DIR2.c_str(), 0777);
 
-    outputStyles.open("./" + dir2 + "/styles.css", ios::out);
+    outputStyles.open("./" + DIR2 + "/styles.css", ios::out);
     outputStyles << STYLES; 
     outputStyles.close();
+    i = 0;
+    for(auto &p:filesystem::directory_iterator(path)){
+        PATHS.push_back(p.path());
+        cout << p << " " << PATHS[i] << endl; i++;
+    }
 
     double seqTime = 0;
     start_timer();
 
-    for(auto &p:filesystem::directory_iterator(path)){
+    for(int i = 0; i < PATHS.size(); i++){
         ifstream inputFile;
         ofstream outputHTML;
         
-        inputFile.open(p.path(), ios::in);
+        inputFile.open(PATHS[i], ios::in);
 
         html = HEADER;
         string aux, cs = "";
@@ -105,13 +112,12 @@ int main(int argc, char* argv[]) {
         html += cs;
         html += FOOTER;
 
-        name = "./" + dir + "/code";
-        name += to_string(acc);
+        name = "./" + DIR + "/code";
+        name += to_string(i);
         name += ".html";
 
         outputHTML.open(name, ios::out);
         outputHTML << html;
-        acc++;
 
         outputHTML.close();
         inputFile.close();
@@ -119,66 +125,35 @@ int main(int argc, char* argv[]) {
     
     seqTime = stop_timer();
     cout << "El tiempo de ejecución del resaltador Armona en modo secuencial es de: " << seqTime << " ms\n";
-    cout << "Archivos resaltados: " << acc - 1 << endl << endl;
+    cout << "Archivos resaltados: " << PATHS.size() << endl << endl;
 
 
     double paralelTime;
     Block blocks[THREADS];
 
-    int blockSize = SIZE/THREADS;
+    int blockSize = PATHS.size()/THREADS;
     for(int i = 0; i < THREADS; i++){
         blocks[i].start = i * blockSize;
-        blocks[i].end = (i == THREADS - 1)? SIZE - 1 : (i + 1) * blockSize;
+        blocks[i].end = (i == THREADS - 1)? PATHS.size(): (i + 1) * blockSize;
     }
     
-    acc = 1;
     paralelTime = 0;
     start_timer();
 
-    for(auto &p:filesystem::directory_iterator(path)){
-        ifstream inputFile;
-        ofstream outputHTML;
+    pthread_t ptid[THREADS];
 
-        pthread_t ptid[THREADS];
-        
-        inputFile.open(p.path(), ios::in);
-
-        html = HEADER;
-        string aux;
-        cSharp = "";
-        
-        while(!inputFile.eof()) {
-            getline(inputFile, aux);
-            cSharp += aux; 
-            cSharp += " <br> ";
-        } 
-
-        for(int i = 0; i < THREADS; i++){
-            pthread_create(&ptid[i], NULL, regexea, &blocks[i]);
-        }
-
-        for(int i = 0; i < THREADS; i++){
-            pthread_join(ptid[i], NULL);
-        }
-
-        html += cSharp;
-        html += FOOTER;
-
-        name = "./" + dir2 + "/code";
-        name += to_string(acc);
-        name += ".html";
-
-        outputHTML.open(name, ios::out);
-        outputHTML << html;
-        acc++;
-
-        outputHTML.close();
-        inputFile.close();
+    for(int i = 0; i < THREADS; i++){
+        pthread_create(&ptid[i], NULL, regexea, &blocks[i]);
     }
+
+    for(int i = 0; i < THREADS; i++){
+        pthread_join(ptid[i], NULL);
+    }
+
 
     paralelTime = stop_timer();
     cout << "El tiempo de ejecución del resaltador Armona en modo paralelo es de: " << paralelTime << " ms\n";
-    cout << "Archivos resaltados: " << acc - 1 << endl << endl;
+    cout << "Archivos resaltados: " << PATHS.size()  << endl << endl;
 
     return 0;
 }
@@ -187,8 +162,38 @@ void* regexea(void* params){
     Block* b;
     b = (Block*) params;
 
-    for(int i = b->start; i <= b->end; i++) {
-        cSharp = regex_replace(cSharp, EXPRESIONES_REGULARES[i].first, "<span class='" + EXPRESIONES_REGULARES[i].second + "'>$&</span>");
+    for(int i = b->start; i < b-> end; i++){
+
+        ifstream inputFile;
+        ofstream outputHTML;
+        
+        inputFile.open(PATHS[i], ios::in);
+
+        string html = HEADER;
+        string aux, cs = "";
+        
+        while(!inputFile.eof()) {
+            getline(inputFile, aux);
+            cs += aux; 
+            cs += " <br> ";
+        }
+        //cout << "Hola soy un hilo... " << cs << endl;
+        
+        for(int j = 0; j < SIZE; j++){
+            cs = regex_replace(cs, EXPRESIONES_REGULARES[j].first, "<span class='" + EXPRESIONES_REGULARES[j].second + "'>$&</span>");
+        }
+
+        html += cs;
+        html += FOOTER;
+        string name = "./" + DIR2 + "/code";
+        name += to_string(i);
+        name += ".html";
+
+        outputHTML.open(name, ios::out);
+        outputHTML << html;
+
+        outputHTML.close();
+        inputFile.close();
     }
 
     pthread_exit(NULL);

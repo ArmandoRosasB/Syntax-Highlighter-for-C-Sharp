@@ -1,3 +1,11 @@
+/*
+    Resaltador de sintaxis en C++
+
+    Autores:
+        José Armando Rosas Balderas
+        Ramona Nájera Fuentes
+*/
+
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <filesystem>
@@ -7,13 +15,22 @@
 #include <string>
 #include <regex>
 #include "utils.h"
+#include <pthread.h>
 
 using namespace std;
+
+const int THREADS = 8;
+const int SIZE = 18;
+typedef struct {
+    int start, end;
+} Block;
+string cSharp;
 
 const string HEADER = "<!DOCTYPE html><html lang='en'><head><meta charset='UTF-8'><meta http-equiv='X-UA-Compatible' content='IE=edge'><meta name='viewport' content='width=device-width, initial-scale=1.0'><link rel='stylesheet' href='styles.css'><title>C# code editor</title></head><body><pre>";
 const string FOOTER = "</pre></body></html>";
 const string STYLES = "body{background:#333333;color:#FDFFFC;width: 90vw} .cadena{color:rgb(236, 203, 11);} .cadena span{color:rgb(236, 203, 11);} .use_namespc{color:#F71735;} .condicionales{color:#F71735;} .comentarios{color:rgb(190, 190, 190);} .comentarios span{color:rgb(190, 190, 190);}  .operador{color:#F15156;} .tipos{color:#3edff5;font-style:italic;} .tipos span{color:#00BCD4;font-style:italic;} .ciclos{color:#F71735;} .parentheses{color:#CDDC39;} .jump{color:magenta;} .flag{color:#4A8FE7;} .nulo {color:rebeccapurple;font-style:italic;} .definition{color:#FF9F1C;} .oop{color:#E82164;} .bloques{color:#9C27B0;} .type_tam{color:#CDDC39;} .isas{color:#F71735;} .in_out{color:#F71735;}";
-const pair<regex, string>EXPRESIONES_REGULARES[18]= {
+
+const pair<regex, string>EXPRESIONES_REGULARES[SIZE]= {
     pair<regex, string>("((\")([^(\")])*(\"))|((\')([^\"])?(\'))", "cadena"),
     pair<regex, string>("\\busing\\b|\\bnamespace\\b", "use_namespc"), // |using
     pair<regex, string>("\\bdo\\b|\\bwhile\\b|\\bfor\\b|\\bforeach\\b", "ciclos"),
@@ -34,12 +51,14 @@ const pair<regex, string>EXPRESIONES_REGULARES[18]= {
     pair<regex, string>("\\.{1}\\w+[^(<]", "parentheses")
 };
 
+void* regexea(void*);
+
 int main(int argc, char* argv[]) {
     ofstream outputStyles;
     ifstream inputFile;
     ofstream outputHTML;
 
-    string name, html, path, dir = "HTML";
+    string name, html, path, dir = "HTML_SEQ", dir2 = "HTML_PARALEL";
     int acc = 1;
 
     if(argc != 2) {
@@ -53,8 +72,15 @@ int main(int argc, char* argv[]) {
 
     outputStyles.open("./" + dir + "/styles.css", ios::out);
     outputStyles << STYLES; 
+    outputStyles.close();
 
-    double time = 0;
+    mkdir(dir2.c_str(), 0777);
+
+    outputStyles.open("./" + dir2 + "/styles.css", ios::out);
+    outputStyles << STYLES; 
+    outputStyles.close();
+
+    double seqTime = 0;
     start_timer();
 
     for(auto &p:filesystem::directory_iterator(path)){
@@ -72,7 +98,7 @@ int main(int argc, char* argv[]) {
             cs += " <br> ";
         }
         
-        for(int i = 0; i< 18; i++){
+        for(int i = 0; i < SIZE; i++){
             cs = regex_replace(cs, EXPRESIONES_REGULARES[i].first, "<span class='" + EXPRESIONES_REGULARES[i].second + "'>$&</span>");
         }
 
@@ -90,11 +116,80 @@ int main(int argc, char* argv[]) {
         outputHTML.close();
         inputFile.close();
     }
-    outputStyles.close();
     
-    time = stop_timer();
-    cout << "El tiempo de ejecucion del resaltador Armona en modo secuencial es de: " << time << " ms\n";
+    seqTime = stop_timer();
+    cout << "El tiempo de ejecución del resaltador Armona en modo secuencial es de: " << seqTime << " ms\n";
+    cout << "Archivos resaltados: " << acc - 1 << endl << endl;
+
+
+    double paralelTime;
+    Block blocks[THREADS];
+
+    int blockSize = SIZE/THREADS;
+    for(int i = 0; i < THREADS; i++){
+        blocks[i].start = i * blockSize;
+        blocks[i].end = (i == THREADS - 1)? SIZE - 1 : (i + 1) * blockSize;
+    }
+    
+    acc = 1;
+    paralelTime = 0;
+    start_timer();
+
+    for(auto &p:filesystem::directory_iterator(path)){
+        ifstream inputFile;
+        ofstream outputHTML;
+
+        pthread_t ptid[THREADS];
+        
+        inputFile.open(p.path(), ios::in);
+
+        html = HEADER;
+        string aux;
+        cSharp = "";
+        
+        while(!inputFile.eof()) {
+            getline(inputFile, aux);
+            cSharp += aux; 
+            cSharp += " <br> ";
+        } 
+
+        for(int i = 0; i < THREADS; i++){
+            pthread_create(&ptid[i], NULL, regexea, &blocks[i]);
+        }
+
+        for(int i = 0; i < THREADS; i++){
+            pthread_join(ptid[i], NULL);
+        }
+
+        html += cSharp;
+        html += FOOTER;
+
+        name = "./" + dir2 + "/code";
+        name += to_string(acc);
+        name += ".html";
+
+        outputHTML.open(name, ios::out);
+        outputHTML << html;
+        acc++;
+
+        outputHTML.close();
+        inputFile.close();
+    }
+
+    paralelTime = stop_timer();
+    cout << "El tiempo de ejecución del resaltador Armona en modo paralelo es de: " << paralelTime << " ms\n";
     cout << "Archivos resaltados: " << acc - 1 << endl << endl;
 
     return 0;
+}
+
+void* regexea(void* params){
+    Block* b;
+    b = (Block*) params;
+
+    for(int i = b->start; i <= b->end; i++) {
+        cSharp = regex_replace(cSharp, EXPRESIONES_REGULARES[i].first, "<span class='" + EXPRESIONES_REGULARES[i].second + "'>$&</span>");
+    }
+
+    pthread_exit(NULL);
 }

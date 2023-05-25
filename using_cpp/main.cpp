@@ -21,6 +21,7 @@ using namespace std;
 
 const int THREADS = 8;
 const int SIZE = 18;
+
 typedef struct {
     int start, end;
 } Block;
@@ -81,16 +82,15 @@ int main(int argc, char* argv[]) {
     outputStyles.open("./" + DIR2 + "/styles.css", ios::out);
     outputStyles << STYLES; 
     outputStyles.close();
-    i = 0;
+    
     for(auto &p:filesystem::directory_iterator(path)){
         PATHS.push_back(p.path());
-        cout << p << " " << PATHS[i] << endl; i++;
     }
 
     double seqTime = 0;
-    start_timer();
-
-    for(int i = 0; i < PATHS.size(); i++){
+    for(int j = 0; j < N; j++){
+        start_timer();
+        for(int i = 0; i < PATHS.size(); i++){
         ifstream inputFile;
         ofstream outputHTML;
         
@@ -121,10 +121,12 @@ int main(int argc, char* argv[]) {
 
         outputHTML.close();
         inputFile.close();
+        }
+        seqTime += stop_timer();
     }
     
-    seqTime = stop_timer();
-    cout << "El tiempo de ejecución del resaltador Armona en modo secuencial es de: " << seqTime << " ms\n";
+    seqTime /= N;
+    cout << "El tiempo de ejecución promedio del resaltador en modo secuencial es de: " << seqTime << " ms\n";
     cout << "Archivos resaltados: " << PATHS.size() << endl << endl;
 
 
@@ -138,22 +140,27 @@ int main(int argc, char* argv[]) {
     }
     
     paralelTime = 0;
-    start_timer();
-
     pthread_t ptid[THREADS];
 
-    for(int i = 0; i < THREADS; i++){
+    for(int j = 0; j < N; j++){
+        start_timer();
+        for(int i = 0; i < THREADS; i++){
         pthread_create(&ptid[i], NULL, regexea, &blocks[i]);
-    }
+        }
 
-    for(int i = 0; i < THREADS; i++){
+        for(int i = 0; i < THREADS; i++){
         pthread_join(ptid[i], NULL);
+        }
+        paralelTime += stop_timer();
     }
 
 
-    paralelTime = stop_timer();
+    paralelTime /= N;
     cout << "El tiempo de ejecución del resaltador Armona en modo paralelo es de: " << paralelTime << " ms\n";
-    cout << "Archivos resaltados: " << PATHS.size()  << endl << endl;
+    cout << "Archivos resaltados: " << PATHS.size()  << endl << endl << endl;
+
+    double speedup = seqTime/paralelTime;
+    cout << "Speed up: " << speedup << endl;
 
     return 0;
 }

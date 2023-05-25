@@ -21,7 +21,7 @@
 #include <sys/time.h>
 #include <sys/types.h>
 
-#define N 			10
+#define N 			5
 #define DISPLAY		100
 #define TOP_VALUE	10000
 

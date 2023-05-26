@@ -156,7 +156,7 @@ int main(int argc, char* argv[]) {
 
 
     paralelTime /= N;
-    cout << "El tiempo de ejecución del resaltador Armona en modo paralelo es de: " << paralelTime << " ms\n";
+    cout << "El tiempo de ejecución del resaltador en modo paralelo es de: " << paralelTime << " ms\n";
     cout << "Archivos resaltados: " << PATHS.size()  << endl << endl << endl;
 
     double speedup = seqTime/paralelTime;

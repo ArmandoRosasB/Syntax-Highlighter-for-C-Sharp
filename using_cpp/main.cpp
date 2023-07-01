@@ -40,7 +40,7 @@ const pair<regex, string>EXPRESIONES_REGULARES[SIZE]= {
     pair<regex, string>("\\bdo\\b|\\bwhile\\b|\\bfor\\b|\\bforeach\\b", "ciclos"),
     pair<regex, string>("([/][*][^*/]*[*][/])|([/][/][^(<)]*)", "comentarios"),
     pair<regex, string>("\\bif\\b|\\belse\\b|\\bswitch\\b|\\bcase\\b|\\bdefault\\b", "condicionales"),
-    pair<regex, string>("\\+|\\-|\\%|&{1}|\\|{1}|\\^{1}|\\*{1}|/{1}(?!span)|<{1}(?!(span|/span|br))|!|\\b\\~\\b", "operador"), //|(?<!span)(?<!')(?<!br)>{1}|(?<!class)={1}
+    pair<regex, string>("\\+|\\-|\\%|&{1}|\\|{1}|\\^{1}|\\*{1}|/{1}(?!span)|<{1}(?!(span|/span|br))|!|\\b\\~\\b|\\s=\\s", "operador"), //|(?<!span)(?<!')(?<!br)>{1}|(?<!class)={1}
     pair<regex, string>("\\bint\\b|\\buint\\b|\\bfloat\\b|\\bdouble\\b|\\blong\\b|\\bulong\\b|\\bdecimal\\b|\\bstring\\b|\\bchar\\b|\\bbool\\b|\\bshort\\b|\\bushort\\b|\\bbyte\\b|\\bsbyte\\b|\\bparams\\b|\\bref\\b|\\binternal\\b|\\bstackalloc\\b|\\bfixed\\b|\\bvar\\b", "tipos"),
     pair<regex, string>("[(]|[)]|[[]|[\\]]|[{]|[}]", "parentheses"),
     pair<regex, string>("\\breturn(;)?\\b|\\bcontinue(;)?\\b|\\bbreak(;)?\\b|\\bgoto\\b", "jump"),
@@ -91,36 +91,36 @@ int main(int argc, char* argv[]) {
     for(int j = 0; j < N; j++){
         start_timer();
         for(int i = 0; i < PATHS.size(); i++){
-        ifstream inputFile;
-        ofstream outputHTML;
-        
-        inputFile.open(PATHS[i], ios::in);
+            ifstream inputFile;
+            ofstream outputHTML;
+            
+            inputFile.open(PATHS[i], ios::in);
 
-        html = HEADER;
-        string aux, cs = "";
-        
-        while(!inputFile.eof()) {
-            getline(inputFile, aux);
-            cs += aux; 
-            cs += " <br> ";
-        }
-        
-        for(int i = 0; i < SIZE; i++){
-            cs = regex_replace(cs, EXPRESIONES_REGULARES[i].first, "<span class='" + EXPRESIONES_REGULARES[i].second + "'>$&</span>");
-        }
+            html = HEADER;
+            string aux, cs = "";
+            
+            while(!inputFile.eof()) {
+                getline(inputFile, aux);
+                cs += aux; 
+                cs += " <br> ";
+            }
+            
+            for(int i = 0; i < SIZE; i++){
+                cs = regex_replace(cs, EXPRESIONES_REGULARES[i].first, "<span class='" + EXPRESIONES_REGULARES[i].second + "'>$&</span>");
+            }
 
-        html += cs;
-        html += FOOTER;
+            html += cs;
+            html += FOOTER;
 
-        name = "./" + DIR + "/code";
-        name += to_string(i);
-        name += ".html";
+            name = "./" + DIR + "/code";
+            name += to_string(i);
+            name += ".html";
 
-        outputHTML.open(name, ios::out);
-        outputHTML << html;
+            outputHTML.open(name, ios::out);
+            outputHTML << html;
 
-        outputHTML.close();
-        inputFile.close();
+            outputHTML.close();
+            inputFile.close();
         }
         seqTime += stop_timer();
     }
